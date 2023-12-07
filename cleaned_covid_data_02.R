@@ -4,6 +4,8 @@ library(janitor)
 library(ggplot2)
 library(lubridate)
 
+# token is :  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
+
 
 # IMPORT DATA ----
 covid <- read_csv("data/owid-covid-data.csv")
