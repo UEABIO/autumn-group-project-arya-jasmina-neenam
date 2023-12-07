@@ -24,4 +24,4 @@ covid %>%
   duplicated() %>% # produces a list of TRUE/FALSE statements for duplicated or not
   sum() # sums all the TRUE statements                                                                                                                                
 
-summary(covid) # summarises data
+summary(covid) # summaries data
