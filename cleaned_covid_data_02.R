@@ -4,7 +4,7 @@ library(janitor)
 library(ggplot2)
 library(lubridate)
 
-# token is :  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
+
 
 
 # IMPORT DATA ----
@@ -38,5 +38,28 @@ covid %>%
   duplicated() %>% # produces a list of TRUE/FALSE statements for duplicated or not
   sum() # sums all the TRUE statements                                                                                                                                
 
+covid %>% 
+  is.na() %>% #checks for N/A values in data
+  sum()
+
 summary(covid) # summaries data
 
+#___________________________----
+# WORLD DEATH RATES by country----
+
+# create data for world coordinates using  
+# map_data() function 
+world_coordinates <- map_data("world"
+                              ) 
+
+# create world map using ggplot() function 
+ggplot() + 
+  
+# geom_map() function takes world coordinates  
+# as input to plot world map 
+geom_map( 
+    data = world_coordinates, map = world_coordinates, 
+    aes(long, lat, map_id = region) 
+  )
+
+countries <- c('Afghanistan','Albania','Algeria','Andorra','Angola','Anguilla','Antigua and Barbuda','Argentina')
