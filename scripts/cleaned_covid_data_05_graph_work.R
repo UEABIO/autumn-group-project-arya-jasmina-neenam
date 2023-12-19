@@ -1,0 +1,169 @@
+#LOAD PACKAGES
+library(tidyverse)
+library(janitor)
+library(ggplot2)
+library(lubridate)
+library(dplyr)
+
+#___________________________----
+# IMPORT DATA ----
+covid <- read_csv("covid_example_data (1).csv")
+head(covid)
+ca <- read_csv("owid-covid-data.csv") #ca is short for covid_area
+head(ca)
+
+
+#__________________________----
+#CLEAN DATA----
+covid <- janitor::clean_names(covid) # clean the column names
+
+colnames(covid) # check the new variable names
+
+#covid <- rename(covid,
+#                   "AFR"="OWID_AFR") 
+
+covid <- rename(covid,
+                "date_of_entry_for_case"="reprt_creationdt_false",
+                "date_of_birth"="case_dob_false",
+                "symptomatic_status"="contact_id" ,
+                "date_of_first_symptoms"="sym_startdt_false",
+                "symptoms_now_resolved"="sym_resolveddt_false",
+                "date_of_hospital_admission"="hosp_admidt_false",
+                "date_of_hospital_discharge"="hosp_dischdt_false",
+                "date_of_death"= "died_dt_false",
+                "date of positive PCR test" = "pos_sampledt_false",
+                "case_ethnicity" = "case_eth") #re-names columns to easily understandable text
+
+
+#glimpse(covid) # displays column names in console
+
+colnames(covid) # check for duplicate rows in the data
+
+
+duplicated(covid)# produces a list of TRUE/FALSE statements for duplicated or not
+sum() # sums all the TRUE statements                                                                                                                                
+
+covid %>% 
+  is.na() %>% #checks for N/A values in data
+  sum()
+
+summary(covid) # summaries data
+
+#filter location data which removes nulls and continents
+ca$no_of_chars<-nchar(gsub("[^A-Z]","",ca$iso_code))
+fca <- filter(ca,ca$no_of_chars < 4) #continents
+fca <- filter(ca,ca$no_of_chars > 1) #nulls
+
+filter(ca,ca$new_cases > 3)
+
+
+#___________________________----
+# COVID CASES PER COUNTRY PER MILLION ----
+
+world_coordinates <- map_data("world"
+) # makes world map cooridnates
+
+ggplot() + 
+  
+    geom_map( 
+    data = world_coordinates, map = world_coordinates, #plots map using generated co-ordiantes
+    aes(long, lat, map_id = region) # asethetic function used to give the map axis titles etc.
+  )
+
+fca <- rename(fca, "region" = "location")
+
+fca <- fca %>%
+  group_by(region) %>%
+  summarise(total_cases_per_million = max(total_cases_per_million,0, na.rm =T))
+
+fca <- filter(fca, fca$total_cases_per_million > 0)
+
+fca <- fca %>%
+  mutate(region = recode(str_trim(region), "United States" = "USA",
+                         "United Kingdom" = "UK",
+                         "Congo" = "Republic of Congo",
+                         "Democratic Republic of Congo" = "Democratic Republic of the Congo",
+                         "Cote d'Ivoire" = "Ivory Coast",
+                         "Czechia" = "Czech Republic"))
+
+hello_world <- left_join(world_coordinates,fca , by = "region")
+head(hello_world)
+
+plain <- theme(
+  axis.text = element_blank(),
+  axis.line = element_blank(),
+  axis.ticks = element_blank(),
+  panel.border = element_blank(),
+  panel.grid = element_blank(),
+  axis.title = element_blank(),
+  panel.background = element_rect(fill = "white"),
+  plot.title = element_text(hjust = 0.5)
+)
+
+covid_heatmap <- ggplot(data = hello_world,mapping = aes(x = long, y = lat, group = group)) +
+  coord_fixed(1.3) +
+  geom_polygon(aes(fill = total_cases_per_million)) +
+  scale_fill_distiller(palette = "RdBu", direction = -1) +
+  ggtitle("Covid Cases") +
+  plain
+
+covid_heatmap
+
+#___________________________----
+# DEATH RATES PER COUNTRY PER MILLION ----
+
+world_coordinates <- map_data("world"
+) # makes world map cooridnates
+
+ggplot() + 
+  
+  geom_map( 
+    data = world_coordinates, map = world_coordinates, #plots map using generated co-ordiantes
+    aes(long, lat, map_id = region) # asethetic function used to give the map axis titles etc.
+  )
+ca$no_of_chars<-nchar(gsub("[^A-Z]","",ca$iso_code))
+fca <- filter(ca,ca$no_of_chars < 4) #continents
+fca <- filter(ca,ca$no_of_chars > 1) #nulls
+
+filter(ca,ca$new_cases > 3)
+fca <- rename(fca, "region" = "location")
+
+fca <- fca %>%
+  group_by(region) %>%
+  summarise(total_deaths_per_million = max(total_deaths_per_million,0, na.rm =T))
+
+fca <- filter(fca, fca$total_deaths_per_million > 0)
+
+fca <- fca %>%
+  mutate(region = recode(str_trim(region), "United States" = "USA",
+                         "United Kingdom" = "UK",
+                         "Congo" = "Republic of Congo",
+                         "Democratic Republic of Congo" = "Democratic Republic of the Congo",
+                         "Cote d'Ivoire" = "Ivory Coast",
+                         "Czechia" = "Czech Republic"))
+
+hello_world <- left_join(world_coordinates, fca , by = "region")
+head(hello_world)
+
+plain <- theme(
+  axis.text = element_blank(),
+  axis.line = element_blank(),
+  axis.ticks = element_blank(),
+  panel.border = element_blank(),
+  panel.grid = element_blank(),
+  axis.title = element_blank(),
+  panel.background = element_rect(fill = "white"),
+  plot.title = element_text(hjust = 0.5)
+)
+
+covid_deathmap <- ggplot(data = hello_world,mapping = aes(x = long, y = lat, group = group)) +
+  coord_fixed(1.3) +
+  geom_polygon(aes(fill = total_deaths_per_million)) +
+  scale_fill_distiller(palette = "RdBu", direction = -1) +
+  ggtitle("Covid Deaths") +
+  plain
+
+covid_deathmap
+
+
+
