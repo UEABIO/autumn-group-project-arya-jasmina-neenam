@@ -76,8 +76,15 @@ covid %>%
 covid %>% 
   ggplot(aes(x= continent, 
              y = total_deaths_per_million))+
-  geom_point(aes(colour=continent))+
+  geom_col(aes(colour=continent))+
   geom_smooth(method="lm",    #add another layer of data representation.
               se=FALSE,
-              aes(colour=continent)) # note layers inherit information from the top ggplot() function but not previous layers - if we want separate lines per species we need to either specify this again *or* move the color aesthetic to the top layer. 
+              aes(colour=continent))+ # note layers inherit information from the top ggplot() function but not previous layers - if we want separate lines per species we need to either specify this again *or* move the color aesthetic to the top layer. labs(x = "Flipper length (mm)",
+  labs(x = "Continents", 
+       y = "Total deaths (per million)")
+
+
+ggsave('filename.png', width= , height=??)
+
+
 
