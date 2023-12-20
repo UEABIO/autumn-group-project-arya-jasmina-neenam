@@ -1,34 +1,27 @@
-###-------SUMMATIVE ASSIGNMENT------
-##------NEENAM RAI INDIVIDUAL ANALYSIS----
-#20/11/2023
+
 # PACKAGES ----
 library(tidyverse) # tidy data packages
 library(janitor) # cleans variable names
 library(lubridate) # make sure dates are processed properly
+library(scales)
+library(patchwork)
+
 
 #__________________________----
 # IMPORT DATA ----
 covid <- read_csv ("data/owid-covid-data.csv")
-head(covid) 
+head(covid) # check the data has loaded, prints first 10 rows of dataframe
+
 
 #__________________________----
 # CHECK DATA----
 # check the data
 colnames(covid)
-covid <- janitor::clean_names(covid) # clean the column names
-colnames(covid) # quickly check the new variable names
-covid <- rename(covid,
-                "date_of_entry_for_case"="reprt_creationdt_false",
-                "date_of_birth"="case_dob_false",
-                "symptomatic_status"="contact_id" ,
-                "date_of_first_symptoms"="sym_startdt_false",
-                "symptoms_now_resolved"="sym_resolveddt_false",
-                "date_of_hospital_admission"="hosp_admidt_false",
-                "date_of_hospital_discharge"="hosp_dischdt_false",
-                "date_of_death"= "died_dt_false",
-                "date of positive PCR test" = "pos_sampledt_false",
-                "case_ethnicity" = "case_eth")
 
+
+covid <- janitor::clean_names(covid) # clean the column names
+
+colnames(covid) # quickly check the new variable names
 
 #glimpse(covid) # displays column names in console
 
@@ -46,5 +39,4 @@ covid %>%
 summary(covid) # summaries data
 
 filter(.data = covid, continent %in% c("north america", "south america"))
-
 
