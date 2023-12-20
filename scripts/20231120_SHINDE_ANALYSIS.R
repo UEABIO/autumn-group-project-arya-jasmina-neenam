@@ -3,6 +3,9 @@
 library(tidyverse) # tidy data packages
 library(janitor) # cleans variable names
 library(lubridate) # make sure dates are processed properly
+library(scales)
+library(patchwork)
+
 
 #__________________________----
 # IMPORT DATA ----
@@ -72,19 +75,37 @@ covid %>%
               se=FALSE,
               aes(colour=continent)) # note layers inherit information from the top ggplot() function but not previous layers - if we want separate lines per species we need to either specify this again *or* move the color aesthetic to the top layer. 
 
+options(scipen = 999)
 
-covid %>% 
+p1 <- covid %>% 
+  ggplot(aes(x= continent, 
+             y = total_vaccinations_per_hundred))+
+  geom_col(aes(colour=continent))+
+  geom_smooth(method="lm",    #add another layer of data representation.
+              se=FALSE,
+              aes(colour=continent))+ 
+ ylim(0,800000)+
+  coord_flip()+
+  scale_y_continuous(labels = scales::comma)+
+  labs(x = "Continents", 
+       y = "Total vaccinations (per hundred)",
+       title= "Total recorded vaccinations in each continent")
+
+p2 <- covid %>% 
   ggplot(aes(x= continent, 
              y = total_deaths_per_million))+
   geom_col(aes(colour=continent))+
   geom_smooth(method="lm",    #add another layer of data representation.
               se=FALSE,
-              aes(colour=continent))+ # note layers inherit information from the top ggplot() function but not previous layers - if we want separate lines per species we need to either specify this again *or* move the color aesthetic to the top layer. labs(x = "Flipper length (mm)",
+              aes(colour=continent))+ 
+  coord_flip()+
+  scale_y_continuous(labels = scales::labels)+
   labs(x = "Continents", 
-       y = "Total deaths (per million)")
+       y = "Total deaths (per million)",
+       title= "Total recorded deaths in each continent")
 
-
-ggsave('filename.png', width= , height=??)
+(p1+p2)+
+plot_layout(guides = "collect")
 
 
 
