@@ -1,79 +1,37 @@
 ---
 title: "autumn-group-project-arya-jasmina-neeman"
 author: "Jasmina R"
-date: "2023-12-20"
-output: html_document
+date: "2023-12-21"
+output:
+html_document: default
+pdf_document: default
 ---
+
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
-```
-
+```{r, echo = FALSE}
 ## Including Plots
 
-You can also embed plots, for example:
-
-```{r pressure, echo=TRUE}
-#LOAD PACKAGES
 library(tidyverse)
 library(janitor)
 library(ggplot2)
 library(lubridate)
 library(dplyr)
+library(here)
+library(kableExtra)
+library(rmarkdown)
+library(maps)
+library(knitr)
+library(grid)
 
-#___________________________----
-# IMPORT DATA ----
-covid <- read_csv("covid_example_data (1).csv")
-head(covid)
 ca <- read_csv("owid-covid-data.csv") #ca is short for covid_area
 head(ca)
-
-
-#__________________________----
-#CLEAN DATA----
-covid <- janitor::clean_names(covid) # clean the column names
-
-colnames(covid) # check the new variable names
-
-#covid <- rename(covid,
-#                   "AFR"="OWID_AFR") 
-
-covid <- rename(covid,
-                "date_of_entry_for_case"="reprt_creationdt_false",
-                "date_of_birth"="case_dob_false",
-                "symptomatic_status"="contact_id" ,
-                "date_of_first_symptoms"="sym_startdt_false",
-                "symptoms_now_resolved"="sym_resolveddt_false",
-                "date_of_hospital_admission"="hosp_admidt_false",
-                "date_of_hospital_discharge"="hosp_dischdt_false",
-                "date_of_death"= "died_dt_false",
-                "date of positive PCR test" = "pos_sampledt_false",
-                "case_ethnicity" = "case_eth") #re-names columns to easily understandable text
-
-
-#glimpse(covid) # displays column names in console
-
-colnames(covid) # check for duplicate rows in the data
-
-
-duplicated(covid)# produces a list of TRUE/FALSE statements for duplicated or not
-sum() # sums all the TRUE statements                                                                                                                                
-
-covid %>% 
-  is.na() %>% #checks for N/A values in data
-  sum()
-
-summary(covid) # summaries data
 
 #filter location data which removes nulls and continents
 ca$no_of_chars<-nchar(gsub("[^A-Z]","",ca$iso_code))
@@ -82,19 +40,10 @@ fca <- filter(ca,ca$no_of_chars > 1) #nulls
 
 filter(ca,ca$new_cases > 3)
 
+# create data for world coordinates using  
+# map_data() function
 
-#___________________________----
-# COVID CASES PER COUNTRY PER MILLION ----
-
-world_coordinates <- map_data("world"
-) # makes world map cooridnates
-
-ggplot() + 
-  
-    geom_map( 
-    data = world_coordinates, map = world_coordinates, #plots map using generated co-ordiantes
-    aes(long, lat, map_id = region) # asethetic function used to give the map axis titles etc.
-  )
+world_coordinates <- map_data("world") 
 
 fca <- rename(fca, "region" = "location")
 
@@ -112,7 +61,7 @@ fca <- fca %>%
                          "Cote d'Ivoire" = "Ivory Coast",
                          "Czechia" = "Czech Republic"))
 
-hello_world <- left_join(world_coordinates,fca , by = "region")
+hello_world <- left_join(world_coordinates, fca, by = "region")
 head(hello_world)
 
 plain <- theme(
@@ -123,30 +72,105 @@ plain <- theme(
   panel.grid = element_blank(),
   axis.title = element_blank(),
   panel.background = element_rect(fill = "white"),
-  plot.title = element_text(hjust = 0.5)
+  plot.title = element_text(hjust = 0.5),
 )
 
 covid_heatmap <- ggplot(data = hello_world,mapping = aes(x = long, y = lat, group = group)) +
   coord_fixed(1.3) +
   geom_polygon(aes(fill = total_cases_per_million)) +
-  scale_fill_distiller(palette = "RdBu", direction = -1) +
-  ggtitle("Covid Cases") +
-  plain
+  scale_fill_distiller(palette = "BuPu", direction = 1) +
+  ggtitle("Covid Cases per million") + plain
 
+#adding in N/A annotation
+na_annotation <- data.frame(x = 160, y = -60, label = "N/A", stringsAsFactors = FALSE)
+covid_heatmap <- covid_heatmap +
+  annotation_custom(
+    grob = grid::textGrob(label = na_annotation$label, just = "left", gp = gpar(fontsize = 6)),
+    xmin = max(na_annotation$x) + 7.5, xmax = max(na_annotation$x) + 10,
+    ymin = min(na_annotation$y), ymax = max(na_annotation$y + 5)
+  ) +
+  annotation_custom(grob = rectGrob(gp = gpar(fill = "darkgrey")),
+                    xmin = max(na_annotation$x), xmax = max(na_annotation$x) + 5,
+                    ymin = min(na_annotation$y), ymax = max(na_annotation$y) + 5)
 covid_heatmap
 
-#___________________________----
-# DEATH RATES PER COUNTRY PER MILLION ----
 
-world_coordinates <- map_data("world"
-) # makes world map cooridnates
+library(tidyverse)
+library(janitor)
+library(ggplot2)
+library(lubridate)
+library(dplyr)
+library(here)
+library(kableExtra)
+library(rmarkdown)
+library(maps)
+library(knitr)
+library(grid)
 
-ggplot() + 
-  
-  geom_map( 
-    data = world_coordinates, map = world_coordinates, #plots map using generated co-ordiantes
-    aes(long, lat, map_id = region) # asethetic function used to give the map axis titles etc.
-  )
+ca <- read_csv("owid-covid-data.csv") #ca is short for covid_area
+head(ca)
+
+#filter location data which removes nulls and continents
+ca$no_of_chars<-nchar(gsub("[^A-Z]","",ca$iso_code))
+fca <- filter(ca,ca$no_of_chars < 4) #continents
+fca <- filter(ca,ca$no_of_chars > 1) #nulls
+
+filter(ca,ca$new_cases > 3)
+
+# create data for world coordinates using  
+# map_data() function
+
+world_coordinates <- map_data("world") 
+
+fca <- rename(fca, "region" = "location")
+
+fca <- fca %>%
+  group_by(region) %>%
+  summarise(total_cases_per_million = max(total_cases_per_million,0, na.rm =T))
+
+fca <- filter(fca, fca$total_cases_per_million > 0)
+
+fca <- fca %>%
+  mutate(region = recode(str_trim(region), "United States" = "USA",
+                         "United Kingdom" = "UK",
+                         "Congo" = "Republic of Congo",
+                         "Democratic Republic of Congo" = "Democratic Republic of the Congo",
+                         "Cote d'Ivoire" = "Ivory Coast",
+                         "Czechia" = "Czech Republic"))
+
+hello_world <- left_join(world_coordinates, fca, by = "region")
+head(hello_world)
+
+plain <- theme(
+  axis.text = element_blank(),
+  axis.line = element_blank(),
+  axis.ticks = element_blank(),
+  panel.border = element_blank(),
+  panel.grid = element_blank(),
+  axis.title = element_blank(),
+  panel.background = element_rect(fill = "white"),
+  plot.title = element_text(hjust = 0.5),
+)
+
+covid_heatmap <- ggplot(data = hello_world,mapping = aes(x = long, y = lat, group = group)) +
+  coord_fixed(1.3) +
+  geom_polygon(aes(fill = total_cases_per_million)) +
+  scale_fill_distiller(palette = "BuPu", direction = 1) +
+  ggtitle("Covid Cases per million") + plain
+
+#adding in N/A annotation
+na_annotation <- data.frame(x = 160, y = -60, label = "N/A", stringsAsFactors = FALSE)
+covid_heatmap <- covid_heatmap +
+  annotation_custom(
+    grob = grid::textGrob(label = na_annotation$label, just = "left", gp = gpar(fontsize = 6)),
+    xmin = max(na_annotation$x) + 7.5, xmax = max(na_annotation$x) + 10,
+    ymin = min(na_annotation$y), ymax = max(na_annotation$y + 5)
+  ) +
+  annotation_custom(grob = rectGrob(gp = gpar(fill = "darkgrey")),
+                    xmin = max(na_annotation$x), xmax = max(na_annotation$x) + 5,
+                    ymin = min(na_annotation$y), ymax = max(na_annotation$y) + 5)
+covid_heatmap
+
 ca$no_of_chars<-nchar(gsub("[^A-Z]","",ca$iso_code))
 fca <- filter(ca,ca$no_of_chars < 4) #continents
 fca <- filter(ca,ca$no_of_chars > 1) #nulls
@@ -185,11 +209,24 @@ plain <- theme(
 covid_deathmap <- ggplot(data = hello_world,mapping = aes(x = long, y = lat, group = group)) +
   coord_fixed(1.3) +
   geom_polygon(aes(fill = total_deaths_per_million)) +
-  scale_fill_distiller(palette = "RdBu", direction = -1) +
-  ggtitle("Covid Deaths") +
+  scale_fill_distiller(palette = "BuPu", direction = 1) +
+  ggtitle("Covid Deaths per million") +
   plain
+na_annotation <- data.frame(x = 160, y = -60, label = "N/A", stringsAsFactors = FALSE)
+covid_deathmap <- covid_deathmap +
+  annotation_custom(
+    grob = grid::textGrob(label = na_annotation$label, just = "left", gp = gpar(fontsize = 6)),
+    xmin = max(na_annotation$x) + 7.5, xmax = max(na_annotation$x) + 10,
+    ymin = min(na_annotation$y), ymax = max(na_annotation$y + 5)
+  ) +
+  annotation_custom(grob = rectGrob(gp = gpar(fill = "darkgrey")),
+                    xmin = max(na_annotation$x), xmax = max(na_annotation$x) + 5,
+                    ymin = min(na_annotation$y), ymax = max(na_annotation$y) + 5)
 
 covid_deathmap
+
+
+
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
