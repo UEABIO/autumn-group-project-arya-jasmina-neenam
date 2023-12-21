@@ -9,7 +9,7 @@ library(grid)
 
 #___________________________----
 # IMPORT DATA ----
-covid <- read_csv("covid_example_data (1).csv")
+covid <- read_csv("data/covid_example_data (1).csv")
 head(covid)
 
 
