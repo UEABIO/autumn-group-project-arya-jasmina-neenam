@@ -112,9 +112,9 @@ covid_heatmap <- covid_heatmap +
     xmin = max(na_annotation$x) + 7.5, xmax = max(na_annotation$x) + 10,
     ymin = min(na_annotation$y), ymax = max(na_annotation$y + 5)
   ) +
-  annotation_custom(grob = rectGrob(gp = gpar(fill = "darkgrey")),
-                    xmin = max(na_annotation$x), xmax = max(na_annotation$x) + 5,
-                    ymin = min(na_annotation$y), ymax = max(na_annotation$y) + 5)
+  annotation_custom(grob = rectGrob(gp = gpar(fill = "darkgrey")), #changes colour of annotation box
+                    xmin = max(na_annotation$x), xmax = max(na_annotation$x) + 5, 
+                    ymin = min(na_annotation$y), ymax = max(na_annotation$y) + 5)# creates N/A annotation for grey areas on plot
 covid_heatmap
 
 #___________________________----
@@ -165,10 +165,10 @@ plain <- theme(
 )
 
 covid_deathmap <- ggplot(data = hello_world,mapping = aes(x = long, y = lat, group = group)) +
-  coord_fixed(1.3) +
+  coord_fixed(1.3) + #
   geom_polygon(aes(fill = total_deaths_per_million)) +
-  scale_fill_distiller(palette = "BuPu", direction = 1) +
-  ggtitle("Covid Deaths per million") +
+  scale_fill_distiller(palette = "BuPu", direction = 1) + #created purple to blue colour gradient colour scheme
+  ggtitle("Covid Deaths per million") + #gives plot a title
   plain
 na_annotation <- data.frame(x = 160, y = -60, label = "N/A", stringsAsFactors = FALSE)
 covid_deathmap <- covid_deathmap +
@@ -177,9 +177,9 @@ covid_deathmap <- covid_deathmap +
     xmin = max(na_annotation$x) + 7.5, xmax = max(na_annotation$x) + 10,
     ymin = min(na_annotation$y), ymax = max(na_annotation$y + 5)
   ) +
-  annotation_custom(grob = rectGrob(gp = gpar(fill = "darkgrey")),
+  annotation_custom(grob = rectGrob(gp = gpar(fill = "darkgrey")),#changes colour of annotation box
                     xmin = max(na_annotation$x), xmax = max(na_annotation$x) + 5,
-                    ymin = min(na_annotation$y), ymax = max(na_annotation$y) + 5)
+                    ymin = min(na_annotation$y), ymax = max(na_annotation$y) + 5)# creates N/A annotation for grey areas on plot
 
 covid_deathmap
 
