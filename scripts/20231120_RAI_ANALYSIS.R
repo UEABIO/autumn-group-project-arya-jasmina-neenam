@@ -54,7 +54,7 @@ data <- data.frame(
   Unknown = c(22423,60)
 )
 
-data_long <- tidyr::gather(data, key = "Symptomatic Status", value = "Number of Observations", -Ethnicity)
+data_long <- tidyr::gather(data, key = "Symptomatic Status", value = "Observation", -Ethnicity)
 
 # Create the bar graph using ggplot2
 ggplot(data_long, aes(x = Ethnicity, y = number_of_observations , fill = Status)) +
