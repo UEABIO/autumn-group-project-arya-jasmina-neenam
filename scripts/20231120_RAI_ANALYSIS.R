@@ -54,8 +54,6 @@ data <- data.frame(
   Unknown = c(22423,60)
 )
 
-data_long <- tidyr::gather(data, key = "Symptomatic Status", value = "Number of Observations", -Ethnicity)
-
 # Create the bar graph using ggplot2
 ggplot(data_long, aes(x = Ethnicity, y = Observation , fill = Status)) +
   geom_bar(stat = "identity", position = "dodge") +
@@ -64,4 +62,6 @@ theme(legend.position="none")+
        y ="Observation Count")+
   scale_fill_manual(values = c("Asymptomatic" = "cornflowerblue", "Symptomatic" = "palegreen", "Unknown" = "salmon")) +
   theme_minimal()
+
+
 
