@@ -54,7 +54,7 @@ covid <- covid[!(is.na(covid$case_gender)),]#omits NA from case_gender data
 #COMPARATIVE GRAPH OF AGE AND GENDER OF PATIENTS STUDIED----
 
 
-pal <- c("tomato2","cornflowerblue", "lightgrey")
+pal <- c("tomato2","palegreen3", "lightgrey")
 
 p1 <- covid %>% 
   ggplot(aes(x = case_gender,
@@ -78,7 +78,7 @@ p1 <- covid %>%
 #___________________________----
 #COMPARATIVE GRAPH OF AGE AND DATETO SHOW DEATH RATE----
 
-pal <- c("orange", "lightgrey", "mediumpurple1")
+pal <- c("orange", "lightgrey", "cornflowerblue")
 
 p2 <- covid %>% 
   ggplot(aes(x = died_covid,
