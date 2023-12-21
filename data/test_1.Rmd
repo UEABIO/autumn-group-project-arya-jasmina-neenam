@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-```{r, echo = FALSE}
+```{r, results = 'FALSE'}
 #LOAD PACKAGES
 library(tidyverse)
 library(janitor)
@@ -82,7 +82,7 @@ p2 <- covid %>%
 plot_layout(guides = "collect")
 ```
 
-Figure 1. Plot A shows the distribution of ages of male and female patients in the data set. Plot B is a comparative plot to show the effect that a patients age has on their death rate, with a distribution being showing that the older the patient, the higher the mortality rate.
+Figure 1. Plot A shows the roughly even distribution of ages of male and female patients in the data set. Plot B is a comparative plot to show the effect that a patients age has on their death rate, with a distribution being showing that the older the patient, the higher the mortality rate.
 
 
 
