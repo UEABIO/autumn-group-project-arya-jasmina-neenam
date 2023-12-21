@@ -9,7 +9,7 @@ library(grid)
 
 #___________________________----
 # IMPORT DATA ----
-covid <- read_csv("data/covid_example_data (1).csv")
+covid <- read_csv("covid_example_data (1)(1).csv")
 head(covid)
 
 
@@ -39,5 +39,30 @@ colnames(covid) # check for duplicate rows in the data
 duplicated(covid)# produces a list of TRUE/FALSE statements for duplicated or not
 sum() # sums all the TRUE statements   
 
+covid %>% 
+  is.na() %>% #checks for N/A values in data
+  sum()
 
+covid %>% 
+  summarise(
+    mean_died_covid = mean(died_covid, na.rm=TRUE),
+    mean_case_age = mean(case_age, na.rm=TRUE))
+
+covid <- covid[!(is.na(covid$case_age)),]
+
+covid
+#___________________________----
+#comparative graph of age and date of death to show death rate
+
+
+
+covid %>%
+  ggplot(aes(x = died_covid, y = case_age)) +
+  geom_boxplot(aes(fill = died_covid),
+               alpha = 0.2,
+               width = 0.5,
+               outlier.shape = NA)+
+  geom_jitter(aes(colour = died_covid),
+              width=0.2)+
+  theme(legend.position = "none")
 
