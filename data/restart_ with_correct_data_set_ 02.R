@@ -68,7 +68,7 @@ covid %>%
   geom_jitter(aes(colour = died_covid),
               width=0.2)+
   theme(legend.position = "none")
-ggtitle("ages of patient death from COVID")
+ggtitle("ages of patient death from COVID") 
 
 covid %>%
   ggplot(aes(x = case_gender, y = case_age)) +
@@ -80,4 +80,44 @@ covid %>%
               width=0.2)+
   theme(legend.position = "none")
 ggtitle("genders of infected patients")
+
+pal <- c("red", "blue", "grey")
+
+covid %>% 
+  ggplot(aes(x = case_gender,
+             y = case_age,
+             fill = case_gender,
+             colour = case_gender))+
+  geom_violin(alpha = 0.2)+
+  geom_boxplot(width = 0.2,
+               alpha = 0.6)+
+  scale_fill_manual(values = pal)+
+  scale_colour_manual(values = pal)+
+  theme_classic()+
+  theme(legend.position = "none")+
+  labs(
+    x = "pateint gender",
+    y = "patient age",
+    title = "Age verses gender of patients studied",
+    subtitle = "Box and violin plot of age by gender")
+
+pal <- c("red", "grey", "blue")
+
+covid %>% 
+  ggplot(aes(x = died_covid,
+             y = case_age,
+             fill = died_covid,
+             colour = died_covid))+
+  geom_violin(alpha = 0.2)+
+  geom_boxplot(width = 0.2,
+               alpha = 0.6)+
+  scale_fill_manual(values = pal)+
+  scale_colour_manual(values = pal)+
+  theme_classic()+
+  theme(legend.position = "none")+
+  labs(
+    x = "death of patient",
+    y = "patient age",
+    title = "Age of patient death from covid",
+    subtitle = "Box and violin plot of age by death rate")
 
