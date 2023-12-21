@@ -41,5 +41,30 @@ covid %>%
 
 summary(covid) # summaries data
 
+covid %>% count(symptomatic_status)
 
+covid %>% count(symptomatic_status)
+covid %>% count(symptomatic_status, sort = TRUE)
+covid %>% count(symptomatic_status, case_ethnicity, sort = TRUE)
+covid %>% group_by(case_ethnicity)
+
+library(ggplot2)
+
+
+# create data
+data <- data.frame(
+  Ethnicity = c("NON-HISPANIC/LATINO", "HISPANIC/LATINO"),
+  Asymptomatic = c(6032, 5056)
+  Symptomatic = c(33357, 12)
+  Unknown = c(22423, ))
+
+data_long <- tidyr::gather(data, key = "Symptomatic Status", value = "Number of Observations", -Ethnicity)
+
+# Create the bar graph using ggplot2
+ggplot(data_long, aes(x = Ethnicity, y = Count, fill = Status)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Ethnicity Distribution by Symptomatic Status",
+       x = "Ethnicity", y = "Number of Observations") +
+  scale_fill_manual(values = c("Asymptomatic" = "blue", "Symptomatic" = "red", "Unknown" = "gray")) +
+  theme_minimal()
 
