@@ -57,7 +57,7 @@ data <- data.frame(
 data_long <- tidyr::gather(data, key = "Symptomatic Status", value = "Number of Observations", -Ethnicity)
 
 # Create the bar graph using ggplot2
-ggplot(data_long, aes(x = Ethnicity, y = Observation , fill = Status)) +
+ggplot(data_long, aes(x = Ethnicity, y = number_of_observations , fill = Status)) +
   geom_bar(stat = "identity", position = "dodge") +
 theme(legend.position="none")+
   labs( x ="Ethnic Groups",
