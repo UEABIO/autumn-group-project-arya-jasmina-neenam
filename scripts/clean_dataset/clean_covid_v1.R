@@ -17,7 +17,7 @@ covid <- janitor::clean_names(covid) # clean the column names
 
 colnames(covid) # check the new variable names
 
-ovid <- rename(covid,
+covid <- rename(covid,
                "date_of_entry_for_case"="reprt_creationdt_false",
                "date_of_birth"="case_dob_false",
                "symptomatic_status"="contact_id" ,
@@ -41,3 +41,10 @@ covid %>%
 
 summary(covid) # summaries data
 
+# use mutate and case_when for a statement that conditionally changes the names of the values in a variable
+covid <- covid %>% 
+  mutate(symptomatic_status = case_when(symptomatic_status == "Yes-Symptomatic" ~ "Symptomatic",
+                                        symptomatic_status == "No-Asymptomatic" ~ "Asymptomatic",
+                                        symptomatic_status == "Unknown" ~ "Unknown"))
+
+glimpse(symptomatic_status)
