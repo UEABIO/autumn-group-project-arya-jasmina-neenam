@@ -41,10 +41,6 @@ covid %>%
 
 summary(covid) # summaries data
 
-# use mutate and case_when for a statement that conditionally changes the names of the values in a variable
-covid <- covid %>% 
-  mutate(symptomatic_status = case_when(symptomatic_status == "Yes-Symptomatic" ~ "Symptomatic",
-                                        symptomatic_status == "No-Asymptomatic" ~ "Asymptomatic",
-                                        symptomatic_status == "Unknown" ~ "Unknown"))
 
-glimpse(symptomatic_status)
+
+
