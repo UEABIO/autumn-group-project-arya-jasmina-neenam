@@ -13,6 +13,12 @@ head(covid)
 colnames(covid)
 
 
+covid %>% 
+  ggplot(aes(x= sym_fever, 
+             y = case_age))+
+  geom_boxplot(aes(colour=case_race))
+
+
 options(scipen = 999)
 
 covid %>% 
@@ -85,3 +91,13 @@ p2 <- covid %>%
 
 (p1+p2)+
   plot_layout(guides = "collect")
+
+
+
+
+
+covid %>% 
+  ggplot(aes(x= new_date_of_entry_for_case, 
+             y = case_age))+
+  geom_boxplot(aes(colour=case_race))
+
