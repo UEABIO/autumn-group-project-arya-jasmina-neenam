@@ -62,6 +62,6 @@ ggplot(data_long, aes(x = Ethnicity, y = Observation , fill = Status)) +
 theme(legend.position="none")+
   labs( x ="Ethnic Groups",
        y ="Observation Count")+
-  scale_fill_manual(values = c("Asymptomatic" = "cornflowerblue", "Symptomatic" = "palegreen", "Unknown" = "orangered")) +
+  scale_fill_manual(values = c("Asymptomatic" = "cornflowerblue", "Symptomatic" = "palegreen", "Unknown" = "salmon")) +
   theme_minimal()
 
