@@ -1,21 +1,22 @@
-
-# PACKAGES ----
+#LOAD PACKAGES
 library(tidyverse)
-library(janitor) 
-library(lubridate) 
-library(scales)
-library(patchwork)
+library(janitor)
+library(ggplot2)
+library(lubridate)
 library(dplyr)
+library(maps)
+library(grid)
 
-#__________________________----
+#___________________________----
 # IMPORT DATA ----
-covid <- read_csv ("data/owid-covid-data.csv")
+covid <-read_csv("data/covid_example_data (1).csv")
 head(covid)
-
 #__________________________----
-# CHECK DATA----
-# check the data
-colnames(covid)
+#CLEAN DATA----
+covid <- janitor::clean_names(covid) # clean the column names
+
+colnames(covid) # check the new variable names
+
 covid <- rename(covid,
                 "date_of_entry_for_case"="reprt_creationdt_false",
                 "date_of_birth"="case_dob_false",
@@ -26,19 +27,19 @@ covid <- rename(covid,
                 "date_of_hospital_discharge"="hosp_dischdt_false",
                 "date_of_death"= "died_dt_false",
                 "date of positive PCR test" = "pos_sampledt_false",
-                "case_ethnicity" = "case_eth")
+                "case_ethnicity" = "case_eth") #re-names columns to easily understandable text
 
-covid <- janitor::clean_names(covid) 
-colnames(covid) # quickly check the new variable names
 glimpse(covid) # displays column names in console
-colnames(covid)
+colnames(covid) # check for duplicate rows in the data
 
-# check for duplicates---
 duplicated(covid)# produces a list of TRUE/FALSE statements for duplicated or not
 sum() # sums all the TRUE statements                                                                                                                                
+
 covid %>% 
   is.na() %>% #checks for N/A values in data
   sum()
+
 summary(covid) # summaries data
-filter(.data = covid, continent %in% c("north america", "south america"))
+
+
 
