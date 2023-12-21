@@ -21,9 +21,6 @@ covid <- janitor::clean_names(covid) # clean the column names
 
 colnames(covid) # check the new variable names
 
-#covid <- rename(covid,
-#                   "AFR"="OWID_AFR") 
-
 covid <- rename(covid,
                 "date_of_entry_for_case"="reprt_creationdt_false",
                 "date_of_birth"="case_dob_false",
@@ -185,3 +182,11 @@ covid_deathmap <- covid_deathmap +
                     ymin = min(na_annotation$y), ymax = max(na_annotation$y) + 5)
 
 covid_deathmap
+
+#geom_map( 
+#  data = hello_world, map = world_coordinates, 
+#  aes(long, lat, map_id = region) )
+
+#fca <- fca %>%
+#  group_by(region) %>%
+#  summarise(total_cases = max(total_deaths,0, na.rm =T))
