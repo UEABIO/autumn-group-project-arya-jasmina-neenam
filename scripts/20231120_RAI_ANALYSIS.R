@@ -41,3 +41,5 @@ covid %>%
 
 summary(covid) # summaries data
 
+
+
