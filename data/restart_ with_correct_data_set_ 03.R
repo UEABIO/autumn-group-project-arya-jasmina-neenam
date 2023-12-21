@@ -6,6 +6,7 @@ library(lubridate)
 library(dplyr)
 library(maps)
 library(grid)
+library(patchwork)
 
 #___________________________----
 # IMPORT DATA ----
@@ -15,9 +16,9 @@ head(covid)
 
 #__________________________----
 #CLEAN DATA----
-covid <- janitor::clean_names(covid) # clean the column names
+covid <- janitor::clean_names(covid) # cleans the column names
 
-colnames(covid) # check the new variable names
+colnames(covid) # checks the new variable names
 
 covid <- rename(covid,
                 "date_of_entry_for_case"="reprt_creationdt_false",
@@ -43,47 +44,19 @@ covid %>%
   is.na() %>% #checks for N/A values in data
   sum()
 
-covid %>% 
-  summarise(
-    mean_died_covid = mean(died_covid, na.rm=TRUE),
-    mean_case_age = mean(case_age, na.rm=TRUE))
-
 covid <- covid[!(is.na(covid$case_age)),] # omits NA from case_age data
 
-covid
+covid # shows snap shot of data in console
 
 covid <- covid[!(is.na(covid$died_covid)),] #omits NA from died_covid data
 covid <- covid[!(is.na(covid$case_gender)),]#omits NA from case_gender data
 #___________________________----
-#comparative graph of age and date of death to show death rate
+#COMPARATIVE GRAPH OF AGE AND GENDER OF PATIENTS STUDIED----
 
 
+pal <- c("tomato2","cornflowerblue", "lightgrey")
 
-covid %>%
-  ggplot(aes(x = died_covid, y = case_age)) +
-  geom_boxplot(aes(fill = died_covid),
-               alpha = 0.2,
-               width = 0.5,
-               outlier.shape = NA)+
-  geom_jitter(aes(colour = died_covid),
-              width=0.2)+
-  theme(legend.position = "none")
-ggtitle("ages of patient death from COVID") 
-
-covid %>%
-  ggplot(aes(x = case_gender, y = case_age)) +
-  geom_boxplot(aes(fill = case_gender),
-               alpha = 0.2,
-               width = 0.5,
-               outlier.shape = NA)+
-  geom_jitter(aes(colour = case_gender),
-              width=0.2)+
-  theme(legend.position = "none")
-ggtitle("genders of infected patients")
-
-pal <- c("red", "blue", "grey")
-
-covid %>% 
+p1 <- covid %>% 
   ggplot(aes(x = case_gender,
              y = case_age,
              fill = case_gender,
@@ -99,11 +72,15 @@ covid %>%
     x = "pateint gender",
     y = "patient age",
     title = "Age verses gender of patients studied",
-    subtitle = "Box and violin plot of age by gender")
+    subtitle = "Box and violin plot of age by gender") + theme_light()
 
-pal <- c("red", "grey", "blue")
 
-covid %>% 
+#___________________________----
+#COMPARATIVE GRAPH OF AGE AND DATETO SHOW DEATH RATE----
+
+pal <- c("orange", "lightgrey", "mediumpurple1")
+
+p2 <- covid %>% 
   ggplot(aes(x = died_covid,
              y = case_age,
              fill = died_covid,
@@ -119,5 +96,10 @@ covid %>%
     x = "death of patient",
     y = "patient age",
     title = "Age of patient death from covid",
-    subtitle = "Box and violin plot of age by death rate")
+    subtitle = "Box and violin plot of age by death rate") + theme_light()
 
+#__________________________----
+#COMBINING PLOTS INTO ONE FIGURE----
+
+(p1+p2)+
+plot_layout(guides = "collect")
