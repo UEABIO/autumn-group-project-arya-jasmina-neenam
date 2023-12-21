@@ -5,10 +5,11 @@ library(lubridate)
 library(dplyr)
 library(maps)
 library(grid)
-v
+
+
 #___________________________----
 # IMPORT DATA ----
-covid <- read_csv("projects/covid_example_data (1)(1).csv")
+covid <- read_csv("data/covid_example_data (1)(1).csv")
 head(covid)
 
 
@@ -37,3 +38,15 @@ colnames(covid) # check for duplicate rows in the data
 
 duplicated(covid)# produces a list of TRUE/FALSE statements for duplicated or not
 sum() # sums all the TRUE statements   
+
+covid$new_date_of_first_symptoms <- mdy(covid$date_of_first_symptoms)
+
+covid$new_date_of_entry_for_case <- mdy(covid$date_of_entry_for_case)
+covid$new_date_of_birth <- mdy(covid$date_of_birth)
+covid$new_date_of_hospital_discharge <- mdy(covid$date_of_hospital_discharge)
+
+covid %>% 
+  ggplot(aes(x = new_date_of_entry_for_case))+
+  geom_histogram()
+
+
