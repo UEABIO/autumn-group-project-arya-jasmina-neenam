@@ -5,7 +5,7 @@ library(lubridate)
 library(dplyr)
 library(maps)
 library(grid)
-
+v
 #___________________________----
 # IMPORT DATA ----
 covid <- read_csv("projects/covid_example_data (1)(1).csv")
