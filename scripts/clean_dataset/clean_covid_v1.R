@@ -17,7 +17,7 @@ covid <- janitor::clean_names(covid) # clean the column names
 
 colnames(covid) # check the new variable names
 
-ovid <- rename(covid,
+covid <- rename(covid,
                "date_of_entry_for_case"="reprt_creationdt_false",
                "date_of_birth"="case_dob_false",
                "symptomatic_status"="contact_id" ,
@@ -40,4 +40,7 @@ covid %>%
   sum()
 
 summary(covid) # summaries data
+
+
+
 
