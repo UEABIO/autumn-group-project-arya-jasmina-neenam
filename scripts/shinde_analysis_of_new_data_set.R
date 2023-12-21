@@ -1,5 +1,6 @@
 library(lubridate)
 
+
 covid <- read_csv("data/covid_example_data (1).csv")
 head(covid)
 
