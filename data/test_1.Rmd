@@ -1,11 +1,19 @@
-title: "autumn-group-project-arya-jasmina-neeman"
-author: "Jasmina R"
-date: "2023-12-20"
+---
+title: "test 1"
+author: "JR"
+date: "2023-12-21"
 output: html_document
 ---
-  
-  #LOAD PACKAGES
-  library(tidyverse)
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r, echo = FALSE}
+library(tidyverse)
 library(janitor)
 library(ggplot2)
 library(lubridate)
@@ -17,10 +25,6 @@ library(maps)
 library(knitr)
 library(grid)
 
-#___________________________----
-# IMPORT DATA ----
-covid <- read_csv("covid_example_data (1).csv")
-head(covid)
 ca <- read_csv("owid-covid-data.csv") #ca is short for covid_area
 head(ca)
 
@@ -35,21 +39,6 @@ filter(ca,ca$new_cases > 3)
 # map_data() function
 
 world_coordinates <- map_data("world") 
-
-# create world map using ggplot() function 
-```{r, echo = FALSE}
-ggplot() + 
-  
-  # geom_map() function takes world coordinates  
-  # as input to plot world map 
-  geom_map( 
-    data = world_coordinates, map = world_coordinates, 
-    aes(long, lat, map_id = region)
-  )
-```
-
-#___________________________----
-# WORLD COVID RATES per million by country----
 
 fca <- rename(fca, "region" = "location")
 
@@ -94,17 +83,11 @@ covid_heatmap <- covid_heatmap +
     grob = grid::textGrob(label = na_annotation$label, just = "left", gp = gpar(fontsize = 6)),
     xmin = max(na_annotation$x) + 7.5, xmax = max(na_annotation$x) + 10,
     ymin = min(na_annotation$y), ymax = max(na_annotation$y + 5)
-  ) +
+    ) +
   annotation_custom(grob = rectGrob(gp = gpar(fill = "darkgrey")),
                     xmin = max(na_annotation$x), xmax = max(na_annotation$x) + 5,
                     ymin = min(na_annotation$y), ymax = max(na_annotation$y) + 5)
-
 covid_heatmap
-
-
-
-#___________________________----
-# WORLD DEATH RATES by country----
 
 ca$no_of_chars<-nchar(gsub("[^A-Z]","",ca$iso_code))
 fca <- filter(ca,ca$no_of_chars < 4) #continents
@@ -147,8 +130,7 @@ covid_deathmap <- ggplot(data = hello_world,mapping = aes(x = long, y = lat, gro
   scale_fill_distiller(palette = "BuPu", direction = 1) +
   ggtitle("Covid Deaths per million") +
   plain
-
-na_annotation <- data.frame(x = 160, y = -60, label = "N/A", stringsAsFactors = FALSE)# Change NA position
+na_annotation <- data.frame(x = 160, y = -60, label = "N/A", stringsAsFactors = FALSE)
 covid_deathmap <- covid_deathmap +
   annotation_custom(
     grob = grid::textGrob(label = na_annotation$label, just = "left", gp = gpar(fontsize = 6)),
@@ -160,13 +142,9 @@ covid_deathmap <- covid_deathmap +
                     ymin = min(na_annotation$y), ymax = max(na_annotation$y) + 5)
 
 covid_deathmap
+```
 
-#geom_map( 
-#  data = hello_world, map = world_coordinates, 
-#  aes(long, lat, map_id = region) )
 
-#fca <- fca %>%
-#  group_by(region) %>%
-#  summarise(total_cases = max(total_deaths,0, na.rm =T))
+
 
 
