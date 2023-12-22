@@ -1,5 +1,5 @@
 ---
-title: "test 1"
+title: "autumn-group-project-arya-jasmina-neenam"
 author: "JR"
 date: "2023-12-21"
 output: html_document
@@ -12,139 +12,77 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-```{r, echo = FALSE}
+```{r, results = 'FALSE'}
+#LOAD PACKAGES
 library(tidyverse)
 library(janitor)
 library(ggplot2)
 library(lubridate)
 library(dplyr)
-library(here)
-library(kableExtra)
-library(rmarkdown)
 library(maps)
-library(knitr)
 library(grid)
+library(patchwork)
 
-ca <- read_csv("owid-covid-data.csv") #ca is short for covid_area
-head(ca)
+covid <- read_csv("covid_example_data (1)(1).csv")
+head(covid)
 
-#filter location data which removes nulls and continents
-ca$no_of_chars<-nchar(gsub("[^A-Z]","",ca$iso_code))
-fca <- filter(ca,ca$no_of_chars < 4) #continents
-fca <- filter(ca,ca$no_of_chars > 1) #nulls
+covid <- covid[!(is.na(covid$case_age)),] # omits NA from case_age data
 
-filter(ca,ca$new_cases > 3)
+covid <- covid[!(is.na(covid$died_covid)),] #omits NA from died_covid data
 
-# create data for world coordinates using  
-# map_data() function
+covid <- covid[!(is.na(covid$case_gender)),]#omits NA from case_gender data
 
-world_coordinates <- map_data("world") 
+#COMPARATIVE GRAPH OF AGE AND GENDER OF PATIENTS STUDIED----
 
-fca <- rename(fca, "region" = "location")
 
-fca <- fca %>%
-  group_by(region) %>%
-  summarise(total_cases_per_million = max(total_cases_per_million,0, na.rm =T))
+pal <- c("tomato2","cornflowerblue", "lightgrey")
 
-fca <- filter(fca, fca$total_cases_per_million > 0)
+p1 <- covid %>% 
+  ggplot(aes(x = case_gender,
+             y = case_age,
+             fill = case_gender,
+             colour = case_gender))+
+  geom_violin(alpha = 0.2)+
+  geom_boxplot(width = 0.2,
+               alpha = 0.6)+
+  scale_fill_manual(values = pal)+
+  scale_colour_manual(values = pal)+
+  theme_classic()+
+  theme(legend.position = "none")+
+  labs(
+    x = "pateint gender",
+    y = "patient age",
+    title = "(A) Age verses gender of patients studied",
+    subtitle = "Box and violin plot of age by gender") + theme_light()
 
-fca <- fca %>%
-  mutate(region = recode(str_trim(region), "United States" = "USA",
-                         "United Kingdom" = "UK",
-                         "Congo" = "Republic of Congo",
-                         "Democratic Republic of Congo" = "Democratic Republic of the Congo",
-                         "Cote d'Ivoire" = "Ivory Coast",
-                         "Czechia" = "Czech Republic"))
+#COMPARATIVE GRAPH OF AGE AND DATE TO SHOW DEATH RATE----
 
-hello_world <- left_join(world_coordinates, fca, by = "region")
-head(hello_world)
+pal <- c("orange", "lightgrey", "palegreen3")
 
-plain <- theme(
-  axis.text = element_blank(),
-  axis.line = element_blank(),
-  axis.ticks = element_blank(),
-  panel.border = element_blank(),
-  panel.grid = element_blank(),
-  axis.title = element_blank(),
-  panel.background = element_rect(fill = "white"),
-  plot.title = element_text(hjust = 0.5),
-)
+p2 <- covid %>% 
+  ggplot(aes(x = died_covid,
+             y = case_age,
+             fill = died_covid,
+             colour = died_covid))+
+  geom_violin(alpha = 0.2)+
+  geom_boxplot(width = 0.2,
+               alpha = 0.6)+
+  scale_fill_manual(values = pal)+
+  scale_colour_manual(values = pal)+
+  theme_classic()+
+  theme(legend.position = "none")+
+  labs(
+    x = "death of patient",
+    y = "patient age",
+    title = "(B) Age of patient death from covid",
+    subtitle = "Box and violin plot of age by death rate") + theme_light()
 
-covid_heatmap <- ggplot(data = hello_world,mapping = aes(x = long, y = lat, group = group)) +
-  coord_fixed(1.3) +
-  geom_polygon(aes(fill = total_cases_per_million)) +
-  scale_fill_distiller(palette = "BuPu", direction = 1) +
-  ggtitle("Covid Cases per million") + plain
 
-#adding in N/A annotation
-na_annotation <- data.frame(x = 160, y = -60, label = "N/A", stringsAsFactors = FALSE)
-covid_heatmap <- covid_heatmap +
-  annotation_custom(
-    grob = grid::textGrob(label = na_annotation$label, just = "left", gp = gpar(fontsize = 6)),
-    xmin = max(na_annotation$x) + 7.5, xmax = max(na_annotation$x) + 10,
-    ymin = min(na_annotation$y), ymax = max(na_annotation$y + 5)
-    ) +
-  annotation_custom(grob = rectGrob(gp = gpar(fill = "darkgrey")),
-                    xmin = max(na_annotation$x), xmax = max(na_annotation$x) + 5,
-                    ymin = min(na_annotation$y), ymax = max(na_annotation$y) + 5)
-covid_heatmap
-
-ca$no_of_chars<-nchar(gsub("[^A-Z]","",ca$iso_code))
-fca <- filter(ca,ca$no_of_chars < 4) #continents
-fca <- filter(ca,ca$no_of_chars > 1) #nulls
-
-filter(ca,ca$new_cases > 3)
-fca <- rename(fca, "region" = "location")
-
-fca <- fca %>%
-  group_by(region) %>%
-  summarise(total_deaths_per_million = max(total_deaths_per_million,0, na.rm =T))
-
-fca <- filter(fca, fca$total_deaths_per_million > 0)
-
-fca <- fca %>%
-  mutate(region = recode(str_trim(region), "United States" = "USA",
-                         "United Kingdom" = "UK",
-                         "Congo" = "Republic of Congo",
-                         "Democratic Republic of Congo" = "Democratic Republic of the Congo",
-                         "Cote d'Ivoire" = "Ivory Coast",
-                         "Czechia" = "Czech Republic"))
-
-hello_world <- left_join(world_coordinates, fca , by = "region")
-head(hello_world)
-
-plain <- theme(
-  axis.text = element_blank(),
-  axis.line = element_blank(),
-  axis.ticks = element_blank(),
-  panel.border = element_blank(),
-  panel.grid = element_blank(),
-  axis.title = element_blank(),
-  panel.background = element_rect(fill = "white"),
-  plot.title = element_text(hjust = 0.5)
-)
-
-covid_deathmap <- ggplot(data = hello_world,mapping = aes(x = long, y = lat, group = group)) +
-  coord_fixed(1.3) +
-  geom_polygon(aes(fill = total_deaths_per_million)) +
-  scale_fill_distiller(palette = "BuPu", direction = 1) +
-  ggtitle("Covid Deaths per million") +
-  plain
-na_annotation <- data.frame(x = 160, y = -60, label = "N/A", stringsAsFactors = FALSE)
-covid_deathmap <- covid_deathmap +
-  annotation_custom(
-    grob = grid::textGrob(label = na_annotation$label, just = "left", gp = gpar(fontsize = 6)),
-    xmin = max(na_annotation$x) + 7.5, xmax = max(na_annotation$x) + 10,
-    ymin = min(na_annotation$y), ymax = max(na_annotation$y + 5)
-  ) +
-  annotation_custom(grob = rectGrob(gp = gpar(fill = "darkgrey")),
-                    xmin = max(na_annotation$x), xmax = max(na_annotation$x) + 5,
-                    ymin = min(na_annotation$y), ymax = max(na_annotation$y) + 5)
-
-covid_deathmap
+(p1+p2)+
+plot_layout(guides = "collect")
 ```
 
-
+Figure 1. Plot A shows the roughly even distribution of ages of male and female patients in the data set. Plot B is a comparative plot to show the effect that a patients age has on their death rate, with a distribution being showing that the older the patient, the higher the mortality rate.
 
 
 
