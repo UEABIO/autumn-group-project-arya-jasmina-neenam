@@ -6,6 +6,8 @@ library(lubridate)
 library(dplyr)
 library(maps)
 library(grid)
+library(ggplot2)
+
 
 #___________________________----
 # IMPORT DATA ----
@@ -41,8 +43,7 @@ covid %>%
 
 summary(covid) # summaries data
 
-library(ggplot2)
-
+##
 covid %>% count(symptomatic_status)
 covid %>% count(symptomatic_status, sort = TRUE)
 covid %>% count(symptomatic_status, case_ethnicity, sort = TRUE)
