@@ -190,3 +190,4 @@ covid_deathmap
 #fca <- fca %>%
 #  group_by(region) %>%
 #  summarise(total_cases = max(total_deaths,0, na.rm =T))
+

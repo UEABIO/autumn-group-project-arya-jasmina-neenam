@@ -33,7 +33,7 @@ covid <- rename(covid,
 
 glimpse(covid) # displays column names in console
 
-colnames(covid) # check for duplicate rows in the data
+ colnames(covid) # check for duplicate rows in the data
 
 
 duplicated(covid)# produces a list of TRUE/FALSE statements for duplicated or not
@@ -45,8 +45,71 @@ covid$new_date_of_entry_for_case <- mdy(covid$date_of_entry_for_case)
 covid$new_date_of_birth <- mdy(covid$date_of_birth)
 covid$new_date_of_hospital_discharge <- mdy(covid$date_of_hospital_discharge)
 
-covid %>% 
-  ggplot(aes(x = new_date_of_entry_for_case))+
-  geom_histogram()
+
+new_covid <- select(.data = covid, 
+                       new_date_of_entry_for_case, case_age, case_race, sym_fever)
+
+symptoms_and_ages <- select(.data = covid, 
+                    case_age, case_race, sym_fever, sym_myalgia, sym_losstastesmell)
+
+symptpms_and_ages_omit  <- na.omit(symptoms_and_ages)
+
+ggplot(data = symptpms_and_ages_omit, aes(x = sym_fever, y = case_age)) +
+  geom_boxplot(
+               alpha = 0.7, 
+               width = 0.5,# change width of boxplot
+               outlier.shape = NA)
 
 
+
+complete.cases(new_covid)
+which(complete.cases(new_covid))
+
+new_covid_omit <- na.omit(new_covid)
+
+head(new_covid_omit)
+
+
+ggplot(data = new_covid_omit, aes(x = case_race, y = case_age)) +
+  geom_boxplot(aes(fill = case_race),
+               alpha = 0.7, 
+               width = 0.5,# change width of boxplot
+               outlier.shape = NA)
+              
+ggplot(data = new_covid_omit, aes(x = case_race, y = new_date_of_entry_for_case)) +
+  geom_boxplot(aes(fill = case_race),
+               alpha = 0.7, 
+               width = 0.5,# change width of boxplot
+               outlier.shape = NA)
+
+  
+
+
+  ggplot(data = new_covid_omit, aes(x = case_race,
+             y = new_date_of_entry_for_case,
+             fill = case_race,
+             colour = case_race))+
+  geom_violin(alpha = 0.2)+
+  geom_boxplot(width = 0.2,
+               alpha = 0.6)
+  
+  scale_fill_manual(values = pal)+
+  scale_colour_manual(values = pal)+
+  theme_classic()+
+  theme(legend.position = "none")+
+  labs(
+    x = "",
+    y = "Body mass (g)",
+    title = "Body mass of brush-tailed penguins",
+    subtitle = "Box and violin plot of body mass by species")
+
+
+
+
+# note fill is "inside" colour and colour is "edges" - try it for yourself
+alpha = 0.2, # fainter boxes so the points "pop"
+width = 0.5, # change width of boxplot
+outlier.shape=NA)+
+  geom_jitter(aes(colour = species),
+              width=0.2)+
+  theme(legend.position = "none")
