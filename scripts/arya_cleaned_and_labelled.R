@@ -63,6 +63,8 @@ symptpms_and_ages_omit_no_unknowns  <- filter(symptpms_and_ages_omit,
 
 
 #Graph for age and the presence of fever
+pal <- c("tomato2","cornflowerblue")
+
 p1 <- symptpms_and_ages_omit_no_unknowns %>% 
   ggplot(aes(x = sym_fever,
              y = case_age,
@@ -70,13 +72,15 @@ p1 <- symptpms_and_ages_omit_no_unknowns %>%
              colour = sym_fever))+
   geom_violin(alpha = 0.2)+
   geom_boxplot(width = 0.2,
-               alpha = 0.6)+
+               alpha = 0.6)+ 
+  scale_fill_manual(values = pal)+
+  scale_colour_manual(values = pal)+
   coord_flip()+  
   theme_classic()+
   theme(legend.position = "none")+
   labs( x = "The presence of fever",
         y = "Patients age",
-        title = "",
+        title = "Age of patients with symptoms of fever",
         subtitle = "Box and violin plot of the presence of fever by patients age")
 
 
@@ -90,12 +94,14 @@ p2 <- symptpms_and_ages_omit_no_unknowns %>%
   geom_violin(alpha = 0.2)+
   geom_boxplot(width = 0.2,
                alpha = 0.6)+
+  scale_fill_manual(values = pal)+
+  scale_colour_manual(values = pal)+
   coord_flip()+  
   theme_classic()+
   theme(legend.position = "none")+
   labs( x = "The presence of myalgia",
         y = "Patients age",
-        title = "",
+        title = "Age of patients with symptoms of myalgia",
         subtitle = "Box and violin plot of the presence of myalgia by patients age")
 
 
@@ -109,12 +115,14 @@ p3 <- symptpms_and_ages_omit_no_unknowns %>%
   geom_violin(alpha = 0.2)+
   geom_boxplot(width = 0.2,
                alpha = 0.6)+
+  scale_fill_manual(values = pal)+
+  scale_colour_manual(values = pal)+
   coord_flip()+  
   theme_classic()+
   theme(legend.position = "none")+
   labs( x = "The presence of the loss of taste and smell",
         y = "Patients age",
-        title = "",
+        title = "Age of patients with symptoms of loss of taste and smell",
         subtitle = "Box and violin plot of the presence of the loss of taste and smell by patients age")
 
 
@@ -127,12 +135,14 @@ p4 <- symptpms_and_ages_omit_no_unknowns %>%
   geom_violin(alpha = 0.2)+
   geom_boxplot(width = 0.2,
                alpha = 0.6)+
+  scale_fill_manual(values = pal)+
+  scale_colour_manual(values = pal)+
   coord_flip()+  
   theme_classic()+
   theme(legend.position = "none")+
   labs( x = "The presence of a sore throat",
         y = "Patients age",
-        title = "",
+        title = "Age of patients with symptoms of sore throat",
         subtitle = "Box and violin plot of the presence of a sore throat by patients age")
 
 
@@ -146,12 +156,14 @@ p5 <- symptpms_and_ages_omit_no_unknowns %>%
   geom_violin(alpha = 0.2)+
   geom_boxplot(width = 0.2,
                alpha = 0.6)+
+  scale_fill_manual(values = pal)+
+  scale_colour_manual(values = pal)+
   coord_flip()+  
   theme_classic()+
   theme(legend.position = "none")+
   labs( x = "The presence of coughing",
         y = "Patients age",
-        title = "",
+        title = "Age of patients with symptoms of coughing",
         subtitle = "Box and violin plot of the presence of coughing by patients age")
 
 
@@ -165,12 +177,14 @@ p6 <- symptpms_and_ages_omit_no_unknowns %>%
   geom_violin(alpha = 0.2)+
   geom_boxplot(width = 0.2,
                alpha = 0.6)+
+  scale_fill_manual(values = pal)+
+  scale_colour_manual(values = pal)+
   coord_flip()+  
   theme_classic()+
   theme(legend.position = "none")+
   labs( x = "The presence of headache",
         y = "Patients age",
-        title = "",
+        title = "Age of patients with headache symptoms",
         subtitle = "Box and violin plot of the presence of headache by patients age")
 
 
