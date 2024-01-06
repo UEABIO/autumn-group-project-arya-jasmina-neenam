@@ -1,92 +1,3 @@
----
-title: "autumn-group-project-arya-jasmina-neenam"
-author: "Rai N, Rana J, Shinde A"
-date: "2023-12-21"
-output: html_document
----
-
-
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
-
-```{r, results = 'FALSE'}
-#LOAD PACKAGES
-library(tidyverse)
-library(janitor)
-library(ggplot2)
-library(lubridate)
-library(dplyr)
-library(maps)
-library(grid)
-library(patchwork)
-
-covid <- read_csv("covid_example_data (1)(1).csv")
-head(covid)
-
-covid <- covid[!(is.na(covid$case_age)),] # omits NA from case_age data
-
-covid <- covid[!(is.na(covid$died_covid)),] #omits NA from died_covid data
-
-covid <- covid[!(is.na(covid$case_gender)),]#omits NA from case_gender data
-
-#COMPARATIVE GRAPH OF AGE AND GENDER OF PATIENTS STUDIED----
-
-
-pal <- c("tomato2","cornflowerblue", "lightgrey")
-
-p1 <- covid %>% 
-  ggplot(aes(x = case_gender,
-             y = case_age,
-             fill = case_gender,
-             colour = case_gender))+
-  geom_violin(alpha = 0.2)+
-  geom_boxplot(width = 0.2,
-               alpha = 0.6)+
-  scale_fill_manual(values = pal)+
-  scale_colour_manual(values = pal)+
-  theme_classic()+
-  theme(legend.position = "none")+
-  labs(
-    x = "pateint gender",
-    y = "patient age",
-    title = "(A) Age verses gender of patients studied",
-    subtitle = "Box and violin plot of age by gender") + theme_light()
-
-#COMPARATIVE GRAPH OF AGE AND DATE TO SHOW DEATH RATE----
-
-pal <- c("orange", "lightgrey", "palegreen3")
-
-p2 <- covid %>% 
-  ggplot(aes(x = died_covid,
-             y = case_age,
-             fill = died_covid,
-             colour = died_covid))+
-  geom_violin(alpha = 0.2)+
-  geom_boxplot(width = 0.2,
-               alpha = 0.6)+
-  scale_fill_manual(values = pal)+
-  scale_colour_manual(values = pal)+
-  theme_classic()+
-  theme(legend.position = "none")+
-  labs(
-    x = "death of patient",
-    y = "patient age",
-    title = "(B) Age of patient death from covid",
-    subtitle = "Box and violin plot of age by death rate") + theme_light()
-
-
-(p1+p2)+
-plot_layout(guides = "collect")
-```
-
-Figure 1. Plot A shows the roughly even distribution of ages of male and female patients in the data set. Plot B is a comparative plot to show the effect that a patients age has on their death rate, with a distribution being showing that the older the patient, the higher the mortality rate.
-
-
-```{r, results = 'FALSE'}
-#LOAD PACKAGES
 library(tidyverse)
 library(ggplot2)
 library(dplyr)
@@ -99,10 +10,11 @@ head(covid)
 
 
 #__________________________----
-#CREATING OBJECT----
+#CLEAN DATA----
+covid <- janitor::clean_names(covid) # clean the column names
 
 symptoms_and_ages <- select(.data = covid, 
-                            case_age, case_race, sym_fever, sym_myalgia, sym_losstastesmell, sym_sorethroat, sym_cough, sym_headache) # Creating a data set with all the columns I am interested in
+                            case_age, case_race, sym_fever, sym_myalgia, sym_losstastesmell, sym_sorethroat, sym_cough, sym_headache) # Creating a data set with all the columns i am interested in
 
 symptpms_and_ages_omit  <- na.omit(symptoms_and_ages) # getting rid of missing variables in the data set 
 
@@ -113,9 +25,9 @@ symptpms_and_ages_omit_no_unknowns  <- filter(symptpms_and_ages_omit,
                                               sym_sorethroat != "Unk",
                                               sym_cough != "Unk",
                                               sym_headache != "Unk") # getting rid of the rows containing unknown variables in the data set 
-  
 
-#__________________________----
+
+
 #COMPARATIVE GRAPHS OF AGE AND PREVELANCE OF CERTAIN SYMPTOMS----
 
 
@@ -249,5 +161,4 @@ p6 <- symptpms_and_ages_omit_no_unknowns %>%
 # merging all the plots together
 (p1+p2+p3+p4+p5+p6)+
   plot_layout(guides = "collect")
-```
-Figure 2. Comparitive figure showing the prevalance of fever, myalgia, loss of taste and smell, sore throat, coughing, and headache in 
+
