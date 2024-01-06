@@ -88,7 +88,7 @@ p2 <- covid %>%
        y = "Total deaths (per million)",
        title= "Total recorded deaths in each continent")
 
-(p1+p2)+
+(p1+p2+p3+p4+p5+p6)+
 plot_layout(guides = "collect")
 
 
