@@ -66,11 +66,16 @@ symptomatic_status <- c("Asymptomatic", "Symptomatic", "Unknown")
 
 # Matrix for the values
 Values <- matrix(c( 3721, 2693, 281, 5, 3, 474, 18143, 17215, 1737, 50, 41, 2802, 545, 355, 33, 5, 3, 53),
-                 nrow = 3, ncol = 6, byrow = TRUE)
+
+                                  nrow = 3, ncol = 6, byrow = TRUE)
+
+
+#
 # Create the bar chart
-barplot(Values,horiz = TRUE, main = "The distribution of symptomatic status across ethnicity", names.arg = ethnicity,
-        xlab = "Ethncity", ylab = "Number of Observations",
+barplot(Values,horiz = TRUE, main = "The distribution of symptomatic status across race", names.arg = ethnicity,
+        xlab = "Race", ylab = "Number of Observations",
         col = colors, beside = TRUE)
+plot(xlab, ylab, xlim = c(0, 20000))
 
 # Add the legend to the chart
 legend("topright", symptomatic_status, cex = 0.5, fill = colors)
