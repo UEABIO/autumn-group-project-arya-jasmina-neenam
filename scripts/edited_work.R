@@ -43,33 +43,38 @@ covid %>%
 
 summary(covid) # summaries data
 
+
+symptomatic_and_case_race <- select(.data = covid, 
+                           case_race, symptomatic_status) # Creating a data set with all the columns I am interested in
+
+symptomatic_and_case_race_omit  <- na.omit(symptomatic_and_case_race) # getting rid of missing variables in the data set 
+
+
+symptomatic_and_case_race_omit_no_unknown   <- filter(symptomatic_and_case_race_omit , 
+                                              case_race != "UNKNOWN")
+
 ##
-covid %>% count(symptomatic_status)
-covid %>% count(symptomatic_status, sort = TRUE)
-covid %>% count(symptomatic_status, case_ethnicity, sort = TRUE)
-# create data
-data <- data.frame(
-  Ethnicity = c("NON-HISPANIC", "HISPANIC/LATINO"),
-  Asymptomatic = c(6032, 848),
-  Symptomatic = c(33357,5056),
-  Unknown = c(22423,60))
+symptomatic_and_case_race_omit_no_unknown %>% count(symptomatic_status)
+symptomatic_and_case_race_omit_no_unknown %>% count(symptomatic_status, sort = TRUE)
+symptomatic_and_case_race_omit_no_unknown %>% count(symptomatic_status, case_race, sort = TRUE)
+
+colors = c("#009E73", "#CC79A7", "#56B4E9")
+ethnicity <- c("Black", "White", "Asian", "American indian/Alaska native", "Native Hawaiian/Pacific islander", "Other")
+symptomatic_status <- c("Asymptomatic", "Symptomatic", "Unknown")
 
 
-ggplot(data, aes(x=Ethnicity, y=symptomatic_status)) + 
-  geom_bar(stat = "identity", width=0.2) 
+
+# Matrix for the values
+Values <- matrix(c( 3721, 2693, 281, 5, 3, 474, 18143, 17215, 1737, 50, 41, 2802, 545, 355, 33, 5, 3, 53),
+                 nrow = 3, ncol = 6, byrow = TRUE)
+# Create the bar chart
+barplot(Values,horiz = TRUE, main = "The distribution of symptomatic status across ethnicity", names.arg = ethnicity,
+        xlab = "Ethncity", ylab = "Number of Observations",
+        col = colors, beside = TRUE)
+
+# Add the legend to the chart
+legend("topright", symptomatic_status, cex = 0.5, fill = colors)
 
 
-data_long <- tidyr::gather(data, key = "Symptomatic Status", value = "Number of Observations", -Ethnicity)
 
-# Create the bar graph using ggplot2
-ggplot(data, aes(x = Ethnicity, y =Number of Observation , fill = Status)) +
-  geom_bar(stat = "identity") +
-  theme(legend.position="none")+
-  scale_fill_manual(values = c("Asymptomatic" = "cornflowerblue", "Symptomatic" = "palegreen", "Unknown" = "salmon")) +
-  theme_minimal()
 
-ggsave ="Ethnicity_vs_Symptomatic_Status"
-
-# Create the matrix of the values.
-Values <- matrix(c(33357,5056,2301,6032,848,493,865,60,493),
-                 nrow = 3, ncol = 5, byrow = TRUE)
