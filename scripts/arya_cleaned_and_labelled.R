@@ -76,7 +76,7 @@ p1 <- symptpms_and_ages_omit_no_unknowns %>%
   scale_fill_manual(values = pal)+
   scale_colour_manual(values = pal)+
   coord_flip()+  
-  theme_classic()+
+  theme_light()+
   theme(legend.position = "none")+
   labs( x = "The presence of fever",
         y = "Patients age",
@@ -97,7 +97,7 @@ p2 <- symptpms_and_ages_omit_no_unknowns %>%
   scale_fill_manual(values = pal)+
   scale_colour_manual(values = pal)+
   coord_flip()+  
-  theme_classic()+
+  theme_light()+
   theme(legend.position = "none")+
   labs( x = "The presence of myalgia",
         y = "Patients age",
@@ -118,7 +118,7 @@ p3 <- symptpms_and_ages_omit_no_unknowns %>%
   scale_fill_manual(values = pal)+
   scale_colour_manual(values = pal)+
   coord_flip()+  
-  theme_classic()+
+  theme_light()+
   theme(legend.position = "none")+
   labs( x = "The presence of the loss of taste and smell",
         y = "Patients age",
@@ -138,7 +138,7 @@ p4 <- symptpms_and_ages_omit_no_unknowns %>%
   scale_fill_manual(values = pal)+
   scale_colour_manual(values = pal)+
   coord_flip()+  
-  theme_classic()+
+  theme_light()+
   theme(legend.position = "none")+
   labs( x = "The presence of a sore throat",
         y = "Patients age",
@@ -159,7 +159,7 @@ p5 <- symptpms_and_ages_omit_no_unknowns %>%
   scale_fill_manual(values = pal)+
   scale_colour_manual(values = pal)+
   coord_flip()+  
-  theme_classic()+
+  theme_light()+
   theme(legend.position = "none")+
   labs( x = "The presence of coughing",
         y = "Patients age",
@@ -180,7 +180,7 @@ p6 <- symptpms_and_ages_omit_no_unknowns %>%
   scale_fill_manual(values = pal)+
   scale_colour_manual(values = pal)+
   coord_flip()+  
-  theme_classic()+
+  theme_light()+
   theme(legend.position = "none")+
   labs( x = "The presence of headache",
         y = "Patients age",

@@ -118,9 +118,9 @@ symptpms_and_ages_omit_no_unknowns  <- filter(symptpms_and_ages_omit,
 #__________________________----
 #COMPARATIVE GRAPHS OF AGE AND PREVELANCE OF CERTAIN SYMPTOMS----
 
+pal <- c("tomato2","cornflowerblue") #colour for graphs
 
 #Graph for age and the presence of fever
-pal <- c("tomato2","cornflowerblue")
 
 p1 <- symptpms_and_ages_omit_no_unknowns %>% 
   ggplot(aes(x = sym_fever,
@@ -133,7 +133,7 @@ p1 <- symptpms_and_ages_omit_no_unknowns %>%
   scale_fill_manual(values = pal)+
   scale_colour_manual(values = pal)+
   coord_flip()+  
-  theme_classic()+
+  theme_light()+
   theme(legend.position = "none")+
   labs( x = "The presence of fever",
         y = "Patients age",
@@ -154,7 +154,7 @@ p2 <- symptpms_and_ages_omit_no_unknowns %>%
   scale_fill_manual(values = pal)+
   scale_colour_manual(values = pal)+
   coord_flip()+  
-  theme_classic()+
+  theme_light()+
   theme(legend.position = "none")+
   labs( x = "The presence of myalgia",
         y = "Patients age",
@@ -175,7 +175,7 @@ p3 <- symptpms_and_ages_omit_no_unknowns %>%
   scale_fill_manual(values = pal)+
   scale_colour_manual(values = pal)+
   coord_flip()+  
-  theme_classic()+
+  theme_light()+
   theme(legend.position = "none")+
   labs( x = "The presence of the loss of taste and smell",
         y = "Patients age",
@@ -195,7 +195,7 @@ p4 <- symptpms_and_ages_omit_no_unknowns %>%
   scale_fill_manual(values = pal)+
   scale_colour_manual(values = pal)+
   coord_flip()+  
-  theme_classic()+
+  theme_light()+
   theme(legend.position = "none")+
   labs( x = "The presence of a sore throat",
         y = "Patients age",
@@ -216,7 +216,7 @@ p5 <- symptpms_and_ages_omit_no_unknowns %>%
   scale_fill_manual(values = pal)+
   scale_colour_manual(values = pal)+
   coord_flip()+  
-  theme_classic()+
+  theme_light()+
   theme(legend.position = "none")+
   labs( x = "The presence of coughing",
         y = "Patients age",
@@ -237,7 +237,7 @@ p6 <- symptpms_and_ages_omit_no_unknowns %>%
   scale_fill_manual(values = pal)+
   scale_colour_manual(values = pal)+
   coord_flip()+  
-  theme_classic()+
+  theme_light()+
   theme(legend.position = "none")+
   labs( x = "The presence of headache",
         y = "Patients age",
@@ -245,9 +245,8 @@ p6 <- symptpms_and_ages_omit_no_unknowns %>%
         subtitle = "Box and violin plot of the presence of headache by patients age")
 
 
-
 # merging all the plots together
 (p1+p2+p3+p4+p5+p6)+
   plot_layout(guides = "collect")
 ```
-Figure 2. Comparitive figure showing the prevalance of fever, myalgia, loss of taste and smell, sore throat, coughing, and headache in 
+Figure 2. Comparative figure showing the prevalence of fever, myalgia, loss of taste and smell, sore throat, coughing and headache at different ages, using patients where tests for all symptoms were conducted.
