@@ -76,7 +76,6 @@ barplot(Values,horiz = TRUE, main = "The distribution of symptomatic status acro
         xlab = "Race", ylab = "Number of Observations",
         col = colors, beside = TRUE)
 plot(xlab, ylab, xlim = c(0, 20000))
-
 # Add the legend to the chart
 legend("topright", symptomatic_status, cex = 0.5, fill = colors)
 
