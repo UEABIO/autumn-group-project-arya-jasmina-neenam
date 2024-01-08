@@ -287,8 +287,7 @@ covid <- rename(covid,
                 "case_ethnicity" = "case_eth") 
 glimpse(covid) 
 colnames(covid) 
-duplicated(covid)
-sum()                                                                                                                        
+                                                                                                                       
 covid %>% 
   is.na() %>% 
   sum()
@@ -342,3 +341,13 @@ barplot(Values, main = "The distribution of symptomatic status across race", nam
 legend("topright", symptomatic_status, cex = 1, fill = colors)
 
 ```
+
+References
+
+Chang, W. (2024) R graphics cookbook, 2nd edition, 3.3 Making a Bar Graph of Counts. Available at: https://r-graphics.org/recipe-bar-graph-counts (Accessed: 08 January 2024). 
+
+Holtz, Y. (no date) Basic barplot with GGPLOT2, – the R Graph Gallery. Available at: https://r-graph-gallery.com/218-basic-barplots-with-ggplot2.html (Accessed: 08 January 2024).
+
+Leftwich, P.T. (no date) Chapter 7 Markdown: 5023Y, Chapter 7 Markdown | 5023Y. Available at: https://ueabio.github.io/data-sci-v1/markdown.html (Accessed: 08 January 2024). 
+
+R.K. (2017) Bar plots, Quick-R: Bar Plots. Available at: https://www.statmethods.net/graphs/bar.html (Accessed: 08 January 2024). 
