@@ -1,6 +1,6 @@
 ---
 title: "autumn-group-project-arya-jasmina-neenam"
-author: "JR"
+author: "Rai N, Rana J, Shinde A"
 date: "2023-12-21"
 output: html_document
 ---
