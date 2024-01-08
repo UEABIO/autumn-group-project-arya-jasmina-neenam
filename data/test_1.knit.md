@@ -5,12 +5,15 @@ date: "2023-12-21"
 output: html_document
 ---
 
-``` r
+
+
+
+```r
 #LOAD PACKAGES
 library(tidyverse)
 ```
 
-```         
+```
 ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ## ✔ dplyr     1.1.4     ✔ readr     2.1.4
 ## ✔ forcats   1.0.0     ✔ stringr   1.5.1
@@ -23,11 +26,11 @@ library(tidyverse)
 ## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 ```
 
-``` r
+```r
 library(janitor)
 ```
 
-```         
+```
 ## 
 ## Attaching package: 'janitor'
 ## 
@@ -36,7 +39,7 @@ library(janitor)
 ##     chisq.test, fisher.test
 ```
 
-``` r
+```r
 library(ggplot2)
 library(lubridate)
 library(dplyr)
@@ -48,7 +51,7 @@ library(patchwork)
 covid <- read_csv("covid_example_data (1)(1).csv")
 ```
 
-```         
+```
 ## Rows: 82101 Columns: 28
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: ","
@@ -59,11 +62,11 @@ covid <- read_csv("covid_example_data (1)(1).csv")
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 ```
 
-``` r
+```r
 head(covid)
 ```
 
-```         
+```
 ## # A tibble: 6 × 28
 ##   PID       reprt_creationdt_FALSE case_dob_FALSE case_age case_gender case_race
 ##   <chr>     <chr>                  <chr>             <dbl> <chr>       <chr>    
@@ -82,7 +85,7 @@ head(covid)
 ## #   died_covid <chr>, died_dt_FALSE <chr>, confirmed_case <chr>, …
 ```
 
-``` r
+```r
 #__________________________----
 #CLEAN DATA----
 covid <- janitor::clean_names(covid) # cleans the column names
@@ -90,7 +93,7 @@ covid <- janitor::clean_names(covid) # cleans the column names
 colnames(covid) # checks the new variable names
 ```
 
-```         
+```
 ##  [1] "pid"                    "reprt_creationdt_false" "case_dob_false"        
 ##  [4] "case_age"               "case_gender"            "case_race"             
 ##  [7] "case_eth"               "case_zip"               "contact_id"            
@@ -103,7 +106,7 @@ colnames(covid) # checks the new variable names
 ## [28] "pos_sampledt_false"
 ```
 
-``` r
+```r
 covid <- rename(covid,
                 "date_of_entry_for_case"="reprt_creationdt_false",
                 "date_of_birth"="case_dob_false",
@@ -119,7 +122,7 @@ covid <- rename(covid,
 glimpse(covid) # displays column names in console
 ```
 
-```         
+```
 ## Rows: 82,101
 ## Columns: 28
 ## $ pid                         <chr> "3a85e6992a5ac52f", "c6b5281d5fc50b96", "5…
@@ -152,11 +155,11 @@ glimpse(covid) # displays column names in console
 ## $ `date of positive PCR test` <chr> "22/03/2020", "01/02/2020", "10/02/2020", …
 ```
 
-``` r
+```r
 colnames(covid) # check for duplicate rows in the data
 ```
 
-```         
+```
 ##  [1] "pid"                        "date_of_entry_for_case"    
 ##  [3] "date_of_birth"              "case_age"                  
 ##  [5] "case_gender"                "case_race"                 
@@ -173,11 +176,11 @@ colnames(covid) # check for duplicate rows in the data
 ## [27] "confirmed_case"             "date of positive PCR test"
 ```
 
-``` r
+```r
 duplicated(covid)# produces a list of TRUE/FALSE statements for duplicated or not
 ```
 
-```         
+```
 ##     [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 ##    [13] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 ##    [25] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
@@ -7022,15 +7025,15 @@ duplicated(covid)# produces a list of TRUE/FALSE statements for duplicated or no
 ## [82093] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 ```
 
-``` r
+```r
 sum() # sums all the TRUE statements   
 ```
 
-```         
+```
 ## [1] 0
 ```
 
-``` r
+```r
 covid <- covid[!(is.na(covid$case_age)),] # omits NA from case_age data
 
 covid <- covid[!(is.na(covid$died_covid)),] #omits NA from died_covid data
@@ -7092,11 +7095,12 @@ p2 <- covid %>%
 plot_layout(guides = "collect") #combines plot 1 and 2 in one figure
 ```
 
-<img src="test_1_files/figure-html/unnamed-chunk-1-1.png" width="672"/>
+<img src="test_1_files/figure-html/unnamed-chunk-1-1.png" width="672" />
 
 Figure 1. Plot A shows the roughly even distribution of ages of male and female patients in the data set. Plot B is a comparative plot to show the effect that a patients age has on their death rate, with a distribution being showing that the older the patient, the higher the mortality rate.These two figures provide an overview of the data set as a whole.
 
-``` r
+
+```r
 #LOAD PACKAGES
 library(tidyverse)
 library(ggplot2)
@@ -7108,7 +7112,7 @@ library(patchwork)
 covid <- read_csv("covid_example_data (1)(1).csv")
 ```
 
-```         
+```
 ## Rows: 82101 Columns: 28
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: ","
@@ -7119,11 +7123,11 @@ covid <- read_csv("covid_example_data (1)(1).csv")
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 ```
 
-``` r
+```r
 head(covid)
 ```
 
-```         
+```
 ## # A tibble: 6 × 28
 ##   PID       reprt_creationdt_FALSE case_dob_FALSE case_age case_gender case_race
 ##   <chr>     <chr>                  <chr>             <dbl> <chr>       <chr>    
@@ -7142,7 +7146,7 @@ head(covid)
 ## #   died_covid <chr>, died_dt_FALSE <chr>, confirmed_case <chr>, …
 ```
 
-``` r
+```r
 #__________________________----
 #CREATING OBJECT----
 
@@ -7295,11 +7299,12 @@ p6 <- symptpms_and_ages_omit_no_unknowns %>%
   plot_layout(guides = "collect")
 ```
 
-<img src="test_1_files/figure-html/unnamed-chunk-2-1.png" width="672"/>
+<img src="test_1_files/figure-html/unnamed-chunk-2-1.png" width="672" />
 
 Figure 2. 6 Plots showing the prevalence of different symptoms at different ages using patients who have been tested for all symptoms.
 
-``` r
+
+```r
 #LOAD PACKAGES
 library(tidyverse)
 library(janitor)
@@ -7313,7 +7318,7 @@ library(ggplot2)
 covid <- read_csv("covid_example_data (1)(1).csv")
 ```
 
-```         
+```
 ## Rows: 82101 Columns: 28
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: ","
@@ -7324,11 +7329,11 @@ covid <- read_csv("covid_example_data (1)(1).csv")
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 ```
 
-``` r
+```r
 head(covid)
 ```
 
-```         
+```
 ## # A tibble: 6 × 28
 ##   PID       reprt_creationdt_FALSE case_dob_FALSE case_age case_gender case_race
 ##   <chr>     <chr>                  <chr>             <dbl> <chr>       <chr>    
@@ -7347,7 +7352,7 @@ head(covid)
 ## #   died_covid <chr>, died_dt_FALSE <chr>, confirmed_case <chr>, …
 ```
 
-``` r
+```r
 #__________________________----
 # ----CLEAN DATA----
 covid <- janitor::clean_names(covid) # clean the column names
@@ -7355,7 +7360,7 @@ covid <- janitor::clean_names(covid) # clean the column names
 colnames(covid) # check the new variable names
 ```
 
-```         
+```
 ##  [1] "pid"                    "reprt_creationdt_false" "case_dob_false"        
 ##  [4] "case_age"               "case_gender"            "case_race"             
 ##  [7] "case_eth"               "case_zip"               "contact_id"            
@@ -7368,7 +7373,7 @@ colnames(covid) # check the new variable names
 ## [28] "pos_sampledt_false"
 ```
 
-``` r
+```r
 covid <- rename(covid,
                 "date_of_entry_for_case"="reprt_creationdt_false",
                 "date_of_birth"="case_dob_false",
@@ -7383,7 +7388,7 @@ covid <- rename(covid,
 glimpse(covid) 
 ```
 
-```         
+```
 ## Rows: 82,101
 ## Columns: 28
 ## $ pid                         <chr> "3a85e6992a5ac52f", "c6b5281d5fc50b96", "5…
@@ -7416,11 +7421,11 @@ glimpse(covid)
 ## $ `date of positive PCR test` <chr> "22/03/2020", "01/02/2020", "10/02/2020", …
 ```
 
-``` r
+```r
 colnames(covid) 
 ```
 
-```         
+```
 ##  [1] "pid"                        "date_of_entry_for_case"    
 ##  [3] "date_of_birth"              "case_age"                  
 ##  [5] "case_gender"                "case_race"                 
@@ -7437,11 +7442,11 @@ colnames(covid)
 ## [27] "confirmed_case"             "date of positive PCR test"
 ```
 
-``` r
+```r
 duplicated(covid)
 ```
 
-```         
+```
 ##     [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 ##    [13] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 ##    [25] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
@@ -14286,29 +14291,29 @@ duplicated(covid)
 ## [82093] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 ```
 
-``` r
+```r
 sum()                                                                                                                        
 ```
 
-```         
+```
 ## [1] 0
 ```
 
-``` r
+```r
 covid %>% 
   is.na() %>% 
   sum()
 ```
 
-```         
+```
 ## [1] 815982
 ```
 
-``` r
+```r
 summary(covid) 
 ```
 
-```         
+```
 ##      pid            date_of_entry_for_case date_of_birth         case_age     
 ##  Length:82101       Length:82101           Length:82101       Min.   :-20.00  
 ##  Class :character   Class :character       Class :character   1st Qu.: 25.00  
@@ -14375,7 +14380,7 @@ summary(covid)
 ## 
 ```
 
-``` r
+```r
 #__________________________----
 # ----SELECT DATA SETS REQUIRED----
 symptomatic_and_case_race <- select(.data = covid, 
@@ -14394,7 +14399,7 @@ symptomatic_and_case_race_omit_no_unknown   <- filter(symptomatic_and_case_race_
 symptomatic_and_case_race_omit_no_unknown %>% count(symptomatic_status)
 ```
 
-```         
+```
 ## # A tibble: 3 × 2
 ##   symptomatic_status     n
 ##   <chr>              <int>
@@ -14403,11 +14408,11 @@ symptomatic_and_case_race_omit_no_unknown %>% count(symptomatic_status)
 ## 3 Yes-Symptomatic    39988
 ```
 
-``` r
+```r
 symptomatic_and_case_race_omit_no_unknown %>% count(symptomatic_status, sort = TRUE)
 ```
 
-```         
+```
 ## # A tibble: 3 × 2
 ##   symptomatic_status     n
 ##   <chr>              <int>
@@ -14416,11 +14421,11 @@ symptomatic_and_case_race_omit_no_unknown %>% count(symptomatic_status, sort = T
 ## 3 Unknown              986
 ```
 
-``` r
+```r
 symptomatic_and_case_race_omit_no_unknown %>% count(symptomatic_status, case_race, sort = TRUE)
 ```
 
-```         
+```
 ## # A tibble: 16 × 3
 ##    symptomatic_status case_race                            n
 ##    <chr>              <chr>                            <int>
@@ -14442,7 +14447,7 @@ symptomatic_and_case_race_omit_no_unknown %>% count(symptomatic_status, case_rac
 ## 16 No-Asymptomatic    NATIVE HAWAIIAN/PACIFIC ISLANDER     3
 ```
 
-``` r
+```r
 #__________________________----
 # ----ASSIGN THE COLOURS FOR THE KEY, LABEL THE KEY AND RACES----
 colors = c("#009E73", "#CC79A7", "#56B4E9")
@@ -14472,7 +14477,7 @@ barplot(Values, main = "The distribution of symptomatic status across race", nam
 legend("topright", symptomatic_status, cex = 1, fill = colors)
 ```
 
-<img src="test_1_files/figure-html/unnamed-chunk-3-1.png" width="672"/>
+<img src="test_1_files/figure-html/unnamed-chunk-3-1.png" width="672" />
 
 Figure 3. The figure demonstrates the distribution of the symptomatic status of COVID-19 across the six populations of race (Black, White,Asian,Native American/Alaska native, Pacific Islander and Other). The symptomatic status was measured in number of observations across a population.
 
