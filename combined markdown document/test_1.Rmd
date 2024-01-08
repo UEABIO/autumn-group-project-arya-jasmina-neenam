@@ -303,26 +303,6 @@ covid <- janitor::clean_names(covid) # clean the column names
 
 colnames(covid) # check the new variable names
 
-covid <- rename(covid,
-                "date_of_entry_for_case"="reprt_creationdt_false",
-                "date_of_birth"="case_dob_false",
-                "symptomatic_status"="contact_id" ,
-                "date_of_first_symptoms"="sym_startdt_false",
-                "symptoms_now_resolved"="sym_resolveddt_false",
-                "date_of_hospital_admission"="hosp_admidt_false",
-                "date_of_hospital_discharge"="hosp_dischdt_false",
-                "date_of_death"= "died_dt_false",
-                "date of positive PCR test" = "pos_sampledt_false",
-                "case_ethnicity" = "case_eth") 
-glimpse(covid) 
-colnames(covid) 
-duplicated(covid)
-sum()                                                                                                                        
-covid %>% 
-  is.na() %>% 
-  sum()
-
-summary(covid) 
 
 #__________________________----
 # ----SELECT DATA SETS REQUIRED----
@@ -354,8 +334,9 @@ symptomatic_status <- c("Asymptomatic", "Symptomatic", "Unknown")
 
 #__________________________----
 # ----CREATE MATRIX----
+#the matrix creates a data structure
 Values <- matrix(c( 3721, 2693, 281, 5, 3, 474, 18143, 17215, 1737, 50, 41, 2802, 545, 355, 33, 5, 3, 53),
-                 nrow = 3, ncol = 6, byrow = TRUE)
+                 nrow = 3, ncol = 6, byrow = TRUE) #nrow tells us there are 3 rows (symptomatic_status) and ncol tells us there are 6 columns (race)
 
 #__________________________----
 # ----CREATE BAR CHART----
@@ -373,7 +354,7 @@ legend("topright", symptomatic_status, cex = 1, fill = colors)
 ```
 Figure 3. The figure demonstrates the distribution of the symptomatic status of COVID-19 across the six populations of race (Black, White,Asian,Native American/Alaska native, Pacific Islander and Other). The symptomatic status was measured in number of observations across a population.
 
-Reference List
+**Reference List**
 
 (1) Chang, W. (2024) R graphics cookbook, 2nd edition, 3.3 Making a Bar Graph of Counts. Available at: https://r-graphics.org/recipe-bar-graph-counts (Accessed: 08 January 2024). 
 
