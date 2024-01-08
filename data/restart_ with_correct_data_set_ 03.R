@@ -66,7 +66,6 @@ p1 <- covid %>%
                alpha = 0.6)+ # adds scale
   scale_fill_manual(values = pal)+ 
   scale_colour_manual(values = pal)+
-  coord_flip()+ # flips axis direction
   theme_light()+ # adds in 'light' theme for cohesion between plots
   theme(legend.position = "none")+
   labs(
@@ -91,7 +90,6 @@ p2 <- covid %>%
                alpha = 0.6)+ # adds scale
   scale_fill_manual(values = pal)+
   scale_colour_manual(values = pal)+
-  coord_flip()+ # flips axis direction
   theme_light()+ # adds in 'light' theme for cohesion between plots
   theme(legend.position = "none")+
   labs(
