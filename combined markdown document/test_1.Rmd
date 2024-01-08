@@ -19,7 +19,6 @@ library(janitor)
 library(ggplot2)
 library(lubridate)
 library(dplyr)
-library(maps)
 library(grid)
 library(patchwork)
 
