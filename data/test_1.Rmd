@@ -59,7 +59,7 @@ p1 <- covid %>%
 
 
 #___________________________----
-#COMPARATIVE GRAPH OF AGE AND DATETO SHOW DEATH RATE----
+#COMPARATIVE GRAPH OF AGE AND DATE TO SHOW DEATH RATE----
 
 pal <- c("orange", "lightgrey", "cornflowerblue")
 
@@ -135,11 +135,11 @@ p1 <- symptpms_and_ages_omit_no_unknowns %>%
              colour = sym_fever))+
   geom_violin(alpha = 0.2)+
   geom_boxplot(width = 0.2,
-               alpha = 0.6)+ 
+               alpha = 0.7)+ # adds scale
   scale_fill_manual(values = pal)+
   scale_colour_manual(values = pal)+
-  coord_flip()+  
-  theme_light()+
+  coord_flip()+  # flips axis direction
+  theme_light()+ # adds in 'light' theme for cohesion between plots
   theme(legend.position = "none")+
   labs( x = "The presence of fever",
         y = "Patients age",
@@ -156,11 +156,11 @@ p2 <- symptpms_and_ages_omit_no_unknowns %>%
              colour = sym_myalgia))+
   geom_violin(alpha = 0.2)+
   geom_boxplot(width = 0.2,
-               alpha = 0.6)+
+               alpha = 0.7)+# adds scale
   scale_fill_manual(values = pal)+
   scale_colour_manual(values = pal)+
-  coord_flip()+  
-  theme_light()+
+  coord_flip()+  # flips axis direction
+  theme_light()+ # adds in 'light' theme for cohesion between plots
   theme(legend.position = "none")+
   labs( x = "The presence of myalgia",
         y = "Patients age",
@@ -177,11 +177,11 @@ p3 <- symptpms_and_ages_omit_no_unknowns %>%
              colour = sym_losstastesmell))+
   geom_violin(alpha = 0.2)+
   geom_boxplot(width = 0.2,
-               alpha = 0.6)+
+               alpha = 0.7)+ # adds scale
   scale_fill_manual(values = pal)+
   scale_colour_manual(values = pal)+
-  coord_flip()+  
-  theme_light()+
+  coord_flip()+  # flips axis direction
+  theme_light()+ # adds in 'light' theme for cohesion between plots
   theme(legend.position = "none")+
   labs( x = "The presence of the loss of taste and smell",
         y = "Patients age",
@@ -197,11 +197,11 @@ p4 <- symptpms_and_ages_omit_no_unknowns %>%
              colour = sym_sorethroat))+
   geom_violin(alpha = 0.2)+
   geom_boxplot(width = 0.2,
-               alpha = 0.6)+
+               alpha = 0.7)+ # adds scale
   scale_fill_manual(values = pal)+
   scale_colour_manual(values = pal)+
-  coord_flip()+  
-  theme_light()+
+  coord_flip()+  # flips axis direction
+  theme_light()+ # adds in 'light' theme for cohesion between plots
   theme(legend.position = "none")+
   labs( x = "The presence of a sore throat",
         y = "Patients age",
@@ -218,11 +218,11 @@ p5 <- symptpms_and_ages_omit_no_unknowns %>%
              colour = sym_cough))+
   geom_violin(alpha = 0.2)+
   geom_boxplot(width = 0.2,
-               alpha = 0.6)+
+               alpha = 0.7)+ # adds scale
   scale_fill_manual(values = pal)+
   scale_colour_manual(values = pal)+
-  coord_flip()+  
-  theme_light()+
+  coord_flip()+  # flips axis direction
+  theme_light()+ # adds in 'light' theme for cohesion between plots
   theme(legend.position = "none")+
   labs( x = "The presence of coughing",
         y = "Patients age",
@@ -239,11 +239,11 @@ p6 <- symptpms_and_ages_omit_no_unknowns %>%
              colour = sym_headache))+
   geom_violin(alpha = 0.2)+
   geom_boxplot(width = 0.2,
-               alpha = 0.6)+
+               alpha = 0.7)+ # adds scale
   scale_fill_manual(values = pal)+
   scale_colour_manual(values = pal)+
-  coord_flip()+  
-  theme_light()+
+  coord_flip()+  # flips axis direction
+  theme_light()+ # adds in 'light' theme for cohesion between plots
   theme(legend.position = "none")+
   labs( x = "The presence of headache",
         y = "Patients age",
