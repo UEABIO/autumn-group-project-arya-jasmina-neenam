@@ -63,7 +63,7 @@ p1 <- covid %>%
              colour = case_gender))+
   geom_violin(alpha = 0.2)+
   geom_boxplot(width = 0.2,
-               alpha = 0.6)+ # adds scale
+               alpha = 0.7)+ # adds scale
   scale_fill_manual(values = pal)+ 
   scale_colour_manual(values = pal)+
   coord_flip()+ # flips axis direction
@@ -88,7 +88,7 @@ p2 <- covid %>%
              colour = died_covid))+
   geom_violin(alpha = 0.2)+
   geom_boxplot(width = 0.2,
-               alpha = 0.6)+ # adds scale
+               alpha = 0.7)+ # adds scale
   scale_fill_manual(values = pal)+
   scale_colour_manual(values = pal)+
   coord_flip()+ # flips axis direction
@@ -104,4 +104,4 @@ p2 <- covid %>%
 #COMBINING PLOTS INTO ONE FIGURE----
 
 (p1+p2)+
-plot_layout(guides = "collect")
+plot_layout(guides = "collect") #combines plot 1 and 2 in one figure
