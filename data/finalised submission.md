@@ -8,9 +8,6 @@ output: html_document
 
 
 
-
-
-
 ```r
 #LOAD PACKAGES
 library(tidyverse)
@@ -18,7 +15,7 @@ library(tidyverse)
 
 ```
 ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.3     ✔ readr     2.1.4
+## ✔ dplyr     1.1.4     ✔ readr     2.1.4
 ## ✔ forcats   1.0.0     ✔ stringr   1.5.1
 ## ✔ ggplot2   3.4.4     ✔ tibble    3.2.1
 ## ✔ lubridate 1.9.3     ✔ tidyr     1.3.0
@@ -7100,8 +7097,7 @@ plot_layout(guides = "collect") #combines plot 1 and 2 in one figure
 
 <img src="test_1_files/figure-html/unnamed-chunk-1-1.png" width="672" />
 
-Figure 1. Plot A shows the roughly even distribution of ages of male and female patients in the data set. Plot B is a comparative plot to show the effect that a patients age has on their death rate, with a distribution being showing that the older the patient, the higher the mortality rate.These two figures provide an overview of the data set as a whole. 
-
+Figure 1. Plot A shows the roughly even distribution of ages of male and female patients in the data set. Plot B is a comparative plot to show the effect that a patients age has on their death rate, with a distribution being showing that the older the patient, the higher the mortality rate.These two figures provide an overview of the data set as a whole.
 
 
 ```r
@@ -14482,19 +14478,17 @@ legend("topright", symptomatic_status, cex = 1, fill = colors)
 ```
 
 <img src="test_1_files/figure-html/unnamed-chunk-3-1.png" width="672" />
+
 Figure 3. The figure demonstrates the distribution of the symptomatic status of COVID-19 across the six populations of race (Black, White,Asian,Native American/Alaska native, Pacific Islander and Other). The symptomatic status was measured in number of observations across a population.
 
 **Reference List**
 
+(1) Chang, W. (2024) R graphics cookbook, 2nd edition, 3.3 Making a Bar Graph of Counts. Available at: <https://r-graphics.org/recipe-bar-graph-counts> (Accessed: 08 January 2024).
 
+(2) Holtz, Y. (no date) Basic barplot with GGPLOT2, -- the R Graph Gallery. Available at: <https://r-graph-gallery.com/218-basic-barplots-with-ggplot2.html> (Accessed: 08 January 2024).
 
-(1) Chang, W. (2024) R graphics cookbook, 2nd edition, 3.3 Making a Bar Graph of Counts. Available at: https://r-graphics.org/recipe-bar-graph-counts (Accessed: 08 January 2024). 
+(3) figure 1. (plot 1 + 2) Leftwich, P.T. (no date) 5023Y:data science for biologists, Chapter 3 loading data,Chapter 4 data wrangling part 1, Chapter 5 data wrangling part 2, Chapter 6 Data visualization with ggplot 2, Chapter 7 Markdown. Available at: <https://ueabio.github.io/data-sci-v1/markdown.html> (Accessed: 08 January 2024).
 
-(2) Holtz, Y. (no date) Basic barplot with GGPLOT2, – the R Graph Gallery. Available at: https://r-graph-gallery.com/218-basic-barplots-with-ggplot2.html (Accessed: 08 January 2024). 
+(4) Leftwich, P.T. (no date) Chapter 7 Markdown: 5023Y, Chapter 7 Markdown \| 5023Y. Available at: <https://ueabio.github.io/data-sci-v1/markdown.html> (Accessed: 08 January 2024).
 
-figure 1. (plot 1 + 2)
-Leftwich, P.T. (no date) 5023Y:data science for biologists, Chapter 3 loading data,Chapter 4 data wrangling part 1, Chapter 5 data wrangling part 2, Chapter 6 Data visualization with ggplot 2, Chapter 7 Markdown. Available at: https://ueabio.github.io/data-sci-v1/markdown.html (Accessed: 08 January 2024).
-
-(3) Leftwich, P.T. (no date) Chapter 7 Markdown: 5023Y, Chapter 7 Markdown | 5023Y. Available at: https://ueabio.github.io/data-sci-v1/markdown.html (Accessed: 08 January 2024). 
-
-(4) R.K.- (2017) Bar plots, Quick-R: Bar Plots. Available at: https://www.statmethods.net/graphs/bar.html (Accessed: 08 January 2024). 
+(5) R.K.- (2017) Bar plots, Quick-R: Bar Plots. Available at: <https://www.statmethods.net/graphs/bar.html> (Accessed: 08 January 2024).
