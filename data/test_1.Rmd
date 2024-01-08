@@ -359,7 +359,7 @@ Values <- matrix(c( 3721, 2693, 281, 5, 3, 474, 18143, 17215, 1737, 50, 41, 2802
 
 #__________________________----
 # ----CREATE BAR CHART----
-barplot(Values, main = "The distribution of symptomatic status across race", names.arg = ethnicity,
+barplot(Values, main = "The distribution of symptomatic status across race", names.arg = race,
         xlab = "Race", ylab = "Number of Observations",
         #set limits and arrange font sizes
         ylim=c(0,20000),
