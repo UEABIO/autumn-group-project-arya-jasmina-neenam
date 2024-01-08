@@ -287,7 +287,7 @@ covid <- rename(covid,
                 "case_ethnicity" = "case_eth") 
 glimpse(covid) 
 colnames(covid) 
-                                                                                                                       
+
 covid %>% 
   is.na() %>% 
   sum()
@@ -297,7 +297,7 @@ summary(covid)
 #__________________________----
 # ----SELECT DATA SETS REQUIRED----
 symptomatic_and_case_race <- select(.data = covid, 
-                           case_race, symptomatic_status) 
+                                    case_race, symptomatic_status) 
 #__________________________----
 # ----REMOVE MISSING VARIABLES----
 symptomatic_and_case_race_omit  <- na.omit(symptomatic_and_case_race) 
@@ -305,14 +305,14 @@ symptomatic_and_case_race_omit  <- na.omit(symptomatic_and_case_race)
 #__________________________----
 # ----REMOVE UNKNOWN VALUES----
 symptomatic_and_case_race_omit_no_unknown   <- filter(symptomatic_and_case_race_omit , 
-                                              case_race != "UNKNOWN")
+                                                      case_race != "UNKNOWN")
 
 #__________________________----
 # ----CALCULATE OBSERVATION COUNT ACROSS SYMPTOMATIC STATUS----
 symptomatic_and_case_race_omit_no_unknown %>% count(symptomatic_status)
 symptomatic_and_case_race_omit_no_unknown %>% count(symptomatic_status, sort = TRUE)
 symptomatic_and_case_race_omit_no_unknown %>% count(symptomatic_status, case_race, sort = TRUE)
-  
+
 #__________________________----
 # ----ASSIGN THE COLOURS FOR THE KEY, LABEL THE KEY AND RACES----
 colors = c("#009E73", "#CC79A7", "#56B4E9")
@@ -329,20 +329,24 @@ Values <- matrix(c( 3721, 2693, 281, 5, 3, 474, 18143, 17215, 1737, 50, 41, 2802
 
 #__________________________----
 # ----CREATE BAR CHART----
-barplot(Values, main = "The distribution of symptomatic status across race", names.arg = ethnicity,
+barplot(Values, main = "The distribution of symptomatic status across race", names.arg = race,
         xlab = "Race", ylab = "Number of Observations",
         #set limits and arrange font sizes
         ylim=c(0,20000),
-        cex.name=0.71,
+        cex.name=0.55,
         col = colors, beside = TRUE)
 
 #__________________________----
 # ----ADD LEGEND FOR THE KEY----
 legend("topright", symptomatic_status, cex = 1, fill = colors)
 
-```
 
-References
+```
+  
+  
+##Figure 3. The bar chart demonstrates the symptomatic status of asymptomatic,symptomatic and unknown across the race populations of Black, White, Asian, Native American/Alaska native, Pacific Islander and Other. The symptomatic status is measured in number of observations.
+
+**References**
 
 Chang, W. (2024) R graphics cookbook, 2nd edition, 3.3 Making a Bar Graph of Counts. Available at: https://r-graphics.org/recipe-bar-graph-counts (Accessed: 08 January 2024). 
 
