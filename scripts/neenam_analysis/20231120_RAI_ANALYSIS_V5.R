@@ -2,10 +2,7 @@
 library(tidyverse)
 library(janitor)
 library(ggplot2)
-library(lubridate)
 library(dplyr)
-library(maps)
-library(grid)
 library(ggplot2)
 
 
@@ -79,7 +76,7 @@ barplot(Values, main = "The distribution of symptomatic status across race", nam
         xlab = "Race", ylab = "Number of Observations",
         #set limits and arrange font sizes
         ylim=c(0,20000),
-        cex.name=0.71,
+        cex.name=0.50,
         col = colors, beside = TRUE)
 
 #__________________________----
