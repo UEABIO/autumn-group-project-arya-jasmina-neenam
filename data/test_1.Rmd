@@ -256,6 +256,6 @@ p6 <- symptpms_and_ages_omit_no_unknowns %>%
   plot_layout(guides = "collect")
 ```
 
-Figure 2. 6 Plots showing the ages at which different symptoms are prevalent
+Figure 2. 6 Plots showing the prevalence of different symptoms at different ages using patients who have been tested for all symptoms.
 
 
