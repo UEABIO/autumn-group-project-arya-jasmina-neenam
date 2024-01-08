@@ -32,54 +32,61 @@ covid <- covid[!(is.na(covid$died_covid)),] #omits NA from died_covid data
 
 covid <- covid[!(is.na(covid$case_gender)),]#omits NA from case_gender data
 
+#___________________________----
 #COMPARATIVE GRAPH OF AGE AND GENDER OF PATIENTS STUDIED----
 
 
-pal <- c("tomato2","cornflowerblue", "lightgrey")
+pal <- c("tomato2","palegreen3", "lightgrey")
 
 p1 <- covid %>% 
-  ggplot(aes(x = case_gender,
-             y = case_age,
+  ggplot(aes(x = case_gender, # gender displayed on X-axis
+             y = case_age, # age displayed on Y-Axis
              fill = case_gender,
              colour = case_gender))+
   geom_violin(alpha = 0.2)+
   geom_boxplot(width = 0.2,
-               alpha = 0.6)+
-  scale_fill_manual(values = pal)+
+               alpha = 0.7)+ # adds scale
+  scale_fill_manual(values = pal)+ 
   scale_colour_manual(values = pal)+
-  theme_classic()+
+  coord_flip()+ # flips axis direction
+  theme_light()+ # adds in 'light' theme for cohesion between plots
   theme(legend.position = "none")+
   labs(
-    x = "pateint gender",
-    y = "patient age",
-    title = "(A) Age verses gender of patients studied",
-    subtitle = "Box and violin plot of age by gender") + theme_light()
+    x = "pateint gender", #x-axis title
+    y = "patient age", #y-axis title
+    title = "Age verses gender of patients studied", # graph title
+    subtitle = "Box and violin plot of age by gender")# graph sub-title
 
-#COMPARATIVE GRAPH OF AGE AND DATE TO SHOW DEATH RATE----
 
-pal <- c("orange", "lightgrey", "palegreen3")
+#___________________________----
+#COMPARATIVE GRAPH OF AGE AND DATETO SHOW DEATH RATE----
+
+pal <- c("orange", "lightgrey", "cornflowerblue")
 
 p2 <- covid %>% 
-  ggplot(aes(x = died_covid,
-             y = case_age,
+  ggplot(aes(x = died_covid,# weather they died or not displayed on x-axis
+             y = case_age, # age of patient recorded
              fill = died_covid,
              colour = died_covid))+
   geom_violin(alpha = 0.2)+
   geom_boxplot(width = 0.2,
-               alpha = 0.6)+
+               alpha = 0.7)+ # adds scale
   scale_fill_manual(values = pal)+
   scale_colour_manual(values = pal)+
-  theme_classic()+
+  coord_flip()+ # flips axis direction
+  theme_light()+ # adds in 'light' theme for cohesion between plots
   theme(legend.position = "none")+
   labs(
     x = "death of patient",
     y = "patient age",
-    title = "(B) Age of patient death from covid",
-    subtitle = "Box and violin plot of age by death rate") + theme_light()
+    title = "Age of patient death from covid",
+    subtitle = "Box and violin plot of age by death rate") 
 
+#__________________________----
+#COMBINING PLOTS INTO ONE FIGURE----
 
 (p1+p2)+
-plot_layout(guides = "collect")
+plot_layout(guides = "collect") #combines plot 1 and 2 in one figure
 ```
 
 Figure 1. Plot A shows the roughly even distribution of ages of male and female patients in the data set. Plot B is a comparative plot to show the effect that a patients age has on their death rate, with a distribution being showing that the older the patient, the higher the mortality rate.
