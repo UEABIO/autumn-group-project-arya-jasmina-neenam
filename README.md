@@ -51,3 +51,18 @@ The data is a fake version of a covid linelist a data format for collecting case
 | died_dt_FALSE| Date of death
 | confirmed_case| Confirmed case of COVID-19
 | pos_sampledt_FALSE| Date of positive PCR test
+
+
+## Team members
+Jasmina Rana
+Arya Shinde
+Neenam Rai
+
+## PROJECT OBJECTIVE
+Working in a group of 3 we created a situation report utilizing the provided data to extract valuable insights and trends relevant to public health and medical authorities.
+
+## AIM
+To produce one data figure per person including necessary explanatory text and to present it as a group report
+
+
+
