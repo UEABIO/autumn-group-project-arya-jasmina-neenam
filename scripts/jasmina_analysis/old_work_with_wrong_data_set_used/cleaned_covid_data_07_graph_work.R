@@ -96,15 +96,15 @@ plain <- theme(
   panel.grid = element_blank(),
   axis.title = element_blank(),
   panel.background = element_rect(fill = "white"),
-  plot.title = element_text(hjust = 0.5),
+  plot.title = element_text(hjust = 0.5), # create plain theme
 )
 covid_heatmap <- ggplot(data = hello_world,mapping = aes(x = long, y = lat, group = group)) +
   coord_fixed(1.3) +
   geom_polygon(aes(fill = total_cases_per_million)) +
-  scale_fill_distiller(palette = "BuPu", direction = 1) +
-  ggtitle("Covid Cases per million") + plain
+  scale_fill_distiller(palette = "BuPu", direction = 1) + #adds blue-purple coolour gradient
+  ggtitle("Covid Cases per million") + plain # gives plot title
 
-#adding in N/A annotation
+#adding in N/A annotation----
 na_annotation <- data.frame(x = 160, y = -60, label = "N/A", stringsAsFactors = FALSE)
 covid_heatmap <- covid_heatmap +
   annotation_custom(
@@ -115,7 +115,7 @@ covid_heatmap <- covid_heatmap +
   annotation_custom(grob = rectGrob(gp = gpar(fill = "darkgrey")), #changes colour of annotation box
                     xmin = max(na_annotation$x), xmax = max(na_annotation$x) + 5, 
                     ymin = min(na_annotation$y), ymax = max(na_annotation$y) + 5)# creates N/A annotation for grey areas on plot
-covid_heatmap
+p1 <- covid_heatmap
 
 #___________________________----
 # DEATH RATES PER COUNTRY PER MILLION ----
@@ -148,7 +148,7 @@ fca <- fca %>%
                          "Congo" = "Republic of Congo",
                          "Democratic Republic of Congo" = "Democratic Republic of the Congo",
                          "Cote d'Ivoire" = "Ivory Coast",
-                         "Czechia" = "Czech Republic"))
+                         "Czechia" = "Czech Republic")) #adds in missing regions
 
 hello_world <- left_join(world_coordinates, fca , by = "region")
 head(hello_world)
@@ -181,7 +181,7 @@ covid_deathmap <- covid_deathmap +
                     xmin = max(na_annotation$x), xmax = max(na_annotation$x) + 5,
                     ymin = min(na_annotation$y), ymax = max(na_annotation$y) + 5)# creates N/A annotation for grey areas on plot
 
-covid_deathmap
+p2 <- covid_deathmap
 
 #geom_map( 
 #  data = hello_world, map = world_coordinates, 
@@ -190,3 +190,6 @@ covid_deathmap
 #fca <- fca %>%
 #  group_by(region) %>%
 #  summarise(total_cases = max(total_deaths,0, na.rm =T))
+
+(p1/p2)+
+  plot_layout(guides = "collect")
